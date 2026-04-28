@@ -1,1 +1,1546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>BountyFlow • Arc Testnet</title>
 
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    :root{
+      --bg:#d77a17;
+      --bg-2:#f4b25f;
+      --bg-3:#c86400;
+
+      --ink:#11110f;
+      --soft:#59606a;
+      --muted:#8b9198;
+
+      --blue:#0d46b7;
+      --blue-deep:#082f7c;
+      --blue-soft:#e9f0ff;
+
+      --orange:#f57b06;
+      --orange-deep:#d96200;
+      --orange-soft:#ffb057;
+
+      --card:#fff7e9;
+      --card-2:#fffaf3;
+
+      --line:rgba(18,16,11,.10);
+      --line-blue:rgba(13,70,183,.14);
+
+      --shadow:0 12px 28px rgba(83,40,0,.12);
+      --shadow-soft:0 7px 18px rgba(83,40,0,.08);
+
+      --topbar-h:148px;
+      --footer-h:36px;
+      --maxw:1180px;
+    }
+
+    html,
+    body{
+      width:100%;
+      min-height:100%;
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 16% 0%, rgba(255,255,255,.24), transparent 28%),
+        radial-gradient(circle at 90% 10%, rgba(8,47,124,.08), transparent 28%),
+        linear-gradient(180deg,var(--bg-2) 0%,var(--bg) 54%,var(--bg-3) 100%);
+    }
+
+    body{
+      overflow-x:hidden;
+    }
+
+    button,
+    input,
+    textarea{
+      font:inherit;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      background:none;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .topbar{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:var(--topbar-h);
+      z-index:90;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(255,255,255,.045), transparent 28%),
+        linear-gradient(180deg, #090a0c 0%, #101215 100%);
+      box-shadow:
+        0 9px 24px rgba(0,0,0,.16),
+        inset 0 -1px 0 rgba(255,255,255,.055);
+    }
+
+    .topbar::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(255,123,6,.32), transparent);
+      pointer-events:none;
+    }
+
+    .topbar-inner{
+      width:min(var(--maxw), calc(100% - 22px));
+      height:100%;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 0;
+    }
+
+    .hero-head{
+      width:100%;
+      border-radius:22px;
+      padding:9px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(13,70,183,.07), transparent 31%),
+        linear-gradient(145deg, rgba(255,250,242,.985), rgba(255,242,221,.985));
+      border:1px solid rgba(255,255,255,.68);
+      box-shadow:
+        0 12px 26px rgba(0,0,0,.13),
+        inset 0 1px 0 rgba(255,255,255,.68);
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:7px;
+      align-items:center;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .logo{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      flex-shrink:0;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:950;
+      font-size:14px;
+      letter-spacing:.02em;
+      background:
+        radial-gradient(circle at 28% 20%, rgba(255,255,255,.25), transparent 26%),
+        linear-gradient(145deg, var(--orange-deep), var(--orange), var(--orange-soft));
+      box-shadow:0 9px 18px rgba(221,101,0,.19);
+    }
+
+    .brand-copy{
+      min-width:0;
+    }
+
+    .brand-copy h1{
+      font-size:24px;
+      line-height:.94;
+      letter-spacing:-.055em;
+      font-weight:950;
+      color:var(--blue-deep);
+      white-space:nowrap;
+    }
+
+    .brand-copy h1 span{
+      color:var(--ink);
+    }
+
+    .brand-copy p{
+      margin-top:3px;
+      font-size:10.4px;
+      line-height:1.2;
+      color:var(--soft);
+      font-weight:740;
+      max-width:430px;
+    }
+
+    .hero-side{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:6px;
+    }
+
+    .hero-right{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:6px;
+    }
+
+    .mini-card{
+      min-height:31px;
+      border-radius:12px;
+      padding:5px 8px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      box-shadow:0 4px 10px rgba(38,24,5,.03);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .mini-card small{
+      display:block;
+      font-size:7.4px;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      font-weight:900;
+      color:var(--muted);
+      margin-bottom:1px;
+    }
+
+    .mini-card b{
+      display:block;
+      font-size:11.5px;
+      color:var(--blue-deep);
+      font-weight:950;
+      line-height:1.05;
+    }
+
+    .hero-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:6px;
+    }
+
+    .btn{
+      min-height:34px;
+      border-radius:12px;
+      padding:7px 11px;
+      font-size:12px;
+      font-weight:900;
+      transition:transform .16s ease, opacity .16s ease, filter .16s ease;
+    }
+
+    .btn:active{
+      transform:scale(.985);
+    }
+
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .btn-primary{
+      color:#fff;
+      background:
+        radial-gradient(circle at 24% 15%, rgba(255,255,255,.18), transparent 24%),
+        linear-gradient(145deg, var(--orange-deep), var(--orange));
+      box-shadow:0 8px 16px rgba(219,98,0,.15);
+    }
+
+    .btn-light{
+      color:var(--blue-deep);
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line-blue);
+      box-shadow:0 4px 12px rgba(13,70,183,.04);
+    }
+
+    .btn-dark{
+      color:white;
+      background:linear-gradient(145deg,#111,#262626);
+      box-shadow:0 7px 16px rgba(0,0,0,.12);
+    }
+
+    .page{
+      width:min(var(--maxw), calc(100% - 24px));
+      margin:0 auto;
+      padding-top:calc(var(--topbar-h) + 12px);
+      padding-bottom:calc(var(--footer-h) + 18px);
+    }
+
+    .flow-strip{
+      border-radius:20px;
+      background:rgba(255,246,232,.92);
+      border:1px solid rgba(255,255,255,.54);
+      box-shadow:var(--shadow-soft);
+      padding:8px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:7px;
+      margin-bottom:12px;
+    }
+
+    .step{
+      min-height:35px;
+      border-radius:13px;
+      background:rgba(255,255,255,.90);
+      border:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:5px;
+      font-size:9.5px;
+      line-height:1.1;
+      color:var(--soft);
+      font-weight:900;
+    }
+
+    .step.active{
+      background:linear-gradient(145deg, #eef4ff, #ffffff);
+      color:var(--blue-deep);
+      border-color:var(--line-blue);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+    }
+
+    .workspace{
+      display:grid;
+      grid-template-columns:minmax(0,1fr);
+      gap:12px;
+    }
+
+    .col{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-width:0;
+    }
+
+    .card{
+      border-radius:24px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255,255,255,.42), transparent 28%),
+        linear-gradient(180deg,var(--card-2),var(--card));
+      border:1px solid rgba(255,255,255,.58);
+      box-shadow:var(--shadow);
+      padding:13px;
+      min-width:0;
+    }
+
+    .card-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .kicker{
+      font-size:9px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:900;
+      color:var(--orange-deep);
+      margin-bottom:3px;
+    }
+
+    .title-blue,
+    .title-black{
+      letter-spacing:-.043em;
+      line-height:1.02;
+      font-weight:950;
+    }
+
+    .title-blue{
+      color:var(--blue-deep);
+      font-size:22px;
+    }
+
+    .title-black{
+      color:var(--ink);
+      font-size:22px;
+    }
+
+    .tag{
+      border-radius:999px;
+      padding:7px 10px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      font-size:10.5px;
+      font-weight:880;
+      white-space:nowrap;
+      color:var(--ink);
+      box-shadow:0 3px 9px rgba(0,0,0,.025);
+    }
+
+    .form{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field label{
+      display:block;
+      margin:0 0 5px 2px;
+      color:var(--blue-deep);
+      font-size:11.5px;
+      font-weight:900;
+    }
+
+    input,
+    textarea{
+      width:100%;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      color:var(--ink);
+      outline:none;
+      padding:11px 12px;
+      font-size:13.5px;
+      font-weight:760;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.74);
+    }
+
+    input::placeholder,
+    textarea::placeholder{
+      color:#99a1ad;
+      font-weight:700;
+    }
+
+    textarea{
+      resize:none;
+      min-height:68px;
+      line-height:1.34;
+    }
+
+    input:focus,
+    textarea:focus{
+      border-color:rgba(13,70,183,.34);
+      box-shadow:0 0 0 4px rgba(13,70,183,.07);
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+
+    .token-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+
+    .token-btn{
+      min-height:38px;
+      border-radius:14px;
+      font-size:13px;
+      font-weight:900;
+      color:var(--blue-deep);
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line-blue);
+      transition:.16s ease;
+      box-shadow:0 4px 12px rgba(13,70,183,.035);
+    }
+
+    .token-btn.active{
+      color:#fff;
+      border-color:transparent;
+      background:
+        radial-gradient(circle at 24% 15%, rgba(255,255,255,.18), transparent 24%),
+        linear-gradient(145deg, var(--orange-deep), var(--orange));
+      box-shadow:0 9px 18px rgba(219,98,0,.15);
+    }
+
+    .compact-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+
+    .metric{
+      border-radius:17px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      padding:11px;
+      min-height:76px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
+    }
+
+    .metric small{
+      display:block;
+      font-size:8.2px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:900;
+      color:var(--muted);
+      margin-bottom:7px;
+    }
+
+    .metric strong{
+      display:block;
+      font-size:23px;
+      line-height:1;
+      letter-spacing:-.04em;
+      font-weight:950;
+      color:var(--ink);
+      margin-bottom:5px;
+    }
+
+    .metric strong.blue{
+      color:var(--blue-deep);
+    }
+
+    .metric span{
+      display:block;
+      font-size:11px;
+      line-height:1.22;
+      color:var(--soft);
+      font-weight:720;
+    }
+
+    .task-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .task{
+      border-radius:16px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      padding:11px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
+    }
+
+    .task-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:8px;
+    }
+
+    .task-title{
+      font-size:14px;
+      line-height:1.22;
+      color:var(--ink);
+      font-weight:930;
+    }
+
+    .reward{
+      border-radius:11px;
+      padding:6px 8px;
+      background:var(--blue-soft);
+      color:var(--blue-deep);
+      font-size:10.5px;
+      font-weight:900;
+      white-space:nowrap;
+      flex-shrink:0;
+    }
+
+    .task p{
+      font-size:11.5px;
+      line-height:1.32;
+      color:var(--soft);
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .task-link{
+      margin-bottom:8px;
+      border-radius:13px;
+      padding:8px 9px;
+      background:#fff4e5;
+      border:1px solid rgba(216,99,0,.13);
+      color:var(--blue-deep);
+      font-size:10.5px;
+      font-weight:860;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .task-bottom{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+
+    .slots{
+      border-radius:999px;
+      padding:5px 8px;
+      font-size:9.5px;
+      font-weight:900;
+      color:var(--orange-deep);
+      background:#fff0dc;
+      border:1px solid rgba(216,99,0,.16);
+    }
+
+    .small-btn{
+      min-height:32px;
+      padding:7px 11px;
+      border-radius:11px;
+      font-size:10.5px;
+      font-weight:900;
+      color:#fff;
+      background:linear-gradient(145deg,#111,#262626);
+    }
+
+    .open-btn{
+      min-height:32px;
+      padding:7px 11px;
+      border-radius:11px;
+      font-size:10.5px;
+      font-weight:900;
+      color:#fff;
+      background:
+        radial-gradient(circle at 24% 15%, rgba(255,255,255,.18), transparent 24%),
+        linear-gradient(145deg, var(--orange-deep), var(--orange));
+      box-shadow:0 7px 14px rgba(219,98,0,.14);
+    }
+
+    .review{
+      border-radius:16px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      padding:11px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
+    }
+
+    .review-line{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:12.5px;
+      font-weight:900;
+      color:var(--ink);
+    }
+
+    .dot{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--orange);
+      box-shadow:0 0 0 5px rgba(244,122,5,.12);
+    }
+
+    .result{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:7px;
+    }
+
+    .result-box{
+      border-radius:14px;
+      background:#fff4e5;
+      border:1px solid var(--line);
+      padding:9px;
+    }
+
+    .result-box small{
+      display:block;
+      font-size:8.2px;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      color:var(--muted);
+      font-weight:900;
+      margin-bottom:4px;
+    }
+
+    .result-box b{
+      font-size:12.5px;
+      font-weight:900;
+      color:var(--blue-deep);
+    }
+
+    .profile-strip{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+    }
+
+    .profile-item{
+      border-radius:15px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      padding:10px;
+      min-height:64px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
+    }
+
+    .profile-item small{
+      display:block;
+      font-size:8.2px;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      color:var(--muted);
+      font-weight:900;
+      margin-bottom:6px;
+    }
+
+    .profile-item b{
+      display:block;
+      font-size:20px;
+      line-height:1;
+      font-weight:950;
+      color:var(--blue-deep);
+    }
+
+    .footer-note{
+      text-align:center;
+      color:#522801;
+      font-size:11px;
+      line-height:1.4;
+      font-weight:740;
+      padding:2px 4px 4px;
+    }
+
+    .bottombar{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      height:var(--footer-h);
+      z-index:95;
+      background:
+        linear-gradient(180deg, rgba(9,10,12,.985) 0%, rgba(15,17,19,.98) 100%);
+      border-top:1px solid rgba(255,255,255,.06);
+      box-shadow:0 -7px 18px rgba(0,0,0,.12);
+    }
+
+    .bottombar-inner{
+      width:min(var(--maxw), calc(100% - 24px));
+      margin:0 auto;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .social-link{
+      height:24px;
+      padding:0 11px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:10.5px;
+      font-weight:830;
+      color:#eef2f7;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      transition:.16s ease;
+      min-width:64px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:calc(var(--footer-h) + 10px);
+      transform:translateX(-50%) translateY(18px);
+      opacity:0;
+      pointer-events:none;
+      z-index:120;
+      background:#111;
+      color:#fff;
+      border-radius:999px;
+      padding:10px 13px;
+      font-size:12px;
+      font-weight:850;
+      transition:.2s ease;
+      max-width:calc(100% - 28px);
+      text-align:center;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media (min-width:700px){
+      :root{
+        --topbar-h:124px;
+        --footer-h:36px;
+      }
+
+      .hero-grid{
+        grid-template-columns:minmax(0,1fr) minmax(290px,.72fr);
+        gap:12px;
+      }
+
+      .hero-side{
+        gap:6px;
+      }
+
+      .brand-copy h1{
+        font-size:27px;
+      }
+
+      .brand-copy p{
+        font-size:10.8px;
+        max-width:420px;
+      }
+
+      .logo{
+        width:40px;
+        height:40px;
+        border-radius:15px;
+        font-size:15px;
+      }
+
+      .mini-card{
+        min-height:30px;
+      }
+
+      .btn{
+        min-height:32px;
+        font-size:11.5px;
+      }
+    }
+
+    @media (min-width:1020px){
+      :root{
+        --topbar-h:116px;
+      }
+
+      .page{
+        padding-top:calc(var(--topbar-h) + 16px);
+      }
+
+      .hero-head{
+        padding:10px 12px;
+        border-radius:21px;
+      }
+
+      .hero-grid{
+        grid-template-columns:minmax(0,1.12fr) minmax(380px,.88fr);
+      }
+
+      .brand-copy h1{
+        font-size:30px;
+      }
+
+      .brand-copy p{
+        font-size:11px;
+      }
+
+      .logo{
+        width:42px;
+        height:42px;
+        border-radius:15px;
+        font-size:15px;
+      }
+
+      .workspace{
+        grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr);
+        align-items:start;
+      }
+
+      .desktop-sticky{
+        position:sticky;
+        top:calc(var(--topbar-h) + 16px);
+        align-self:start;
+      }
+
+      .card{
+        padding:15px;
+      }
+
+      .title-blue,
+      .title-black{
+        font-size:24px;
+      }
+    }
+
+    @media (min-width:1220px){
+      .workspace{
+        grid-template-columns:minmax(0,1.12fr) minmax(410px,.88fr);
+      }
+    }
+
+    @media (max-width:699px){
+      :root{
+        --topbar-h:148px;
+        --footer-h:36px;
+      }
+
+      .topbar-inner,
+      .page,
+      .bottombar-inner{
+        width:calc(100% - 20px);
+      }
+    }
+
+    @media (max-width:420px){
+      :root{
+        --topbar-h:152px;
+      }
+
+      .brand-copy h1{
+        font-size:23px;
+      }
+
+      .brand-copy p{
+        font-size:10px;
+      }
+
+      .logo{
+        width:36px;
+        height:36px;
+        font-size:13.5px;
+      }
+
+      .social-link{
+        min-width:auto;
+        padding:0 10px;
+        font-size:10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <section class="hero-head">
+        <div class="hero-grid">
+          <div class="brand">
+            <div class="logo">BF</div>
+
+            <div class="brand-copy">
+              <h1>Bounty<span>Flow</span></h1>
+              <p>Tarefas verificadas. Provas revisadas. Recompensas liberadas.</p>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="hero-right">
+              <div class="mini-card">
+                <small>Carteira</small>
+                <b id="walletText">Não conectada</b>
+              </div>
+
+              <div class="mini-card">
+                <small>Rede</small>
+                <b>Arc Testnet</b>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" id="walletBtn">Conectar</button>
+              <button class="btn btn-light" id="demoBtn">Demo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="flow-strip">
+      <div class="step active">Criar<br>tarefa</div>
+      <div class="step">Abrir<br>projeto</div>
+      <div class="step">Enviar<br>prova</div>
+      <div class="step">IA<br>revisa</div>
+    </section>
+
+    <section class="workspace">
+      <div class="col">
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <div class="kicker">Criador</div>
+              <h2 class="title-black">Nova tarefa</h2>
+            </div>
+            <div class="tag" id="tokenTag">USDC</div>
+          </div>
+
+          <div class="form">
+            <div class="field">
+              <label>Título</label>
+              <input id="taskTitle" placeholder="Conectar carteira na StableFlow" />
+            </div>
+
+            <div class="field">
+              <label>Link do projeto</label>
+              <input id="taskLink" placeholder="https://seu-projeto.vercel.app" />
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label>Recompensa</label>
+                <input id="taskReward" type="number" step="0.01" placeholder="0.20" />
+              </div>
+
+              <div class="field">
+                <label>Vagas</label>
+                <input id="taskSlots" type="number" placeholder="10" />
+              </div>
+            </div>
+
+            <div class="token-row">
+              <button class="token-btn active" data-token="USDC">USDC</button>
+              <button class="token-btn" data-token="EURC">EURC</button>
+            </div>
+
+            <div class="field">
+              <label>Prova exigida</label>
+              <textarea id="taskProof" placeholder="Informe carteira usada, navegador, aparelho, se conectou ou não, e se apareceu erro."></textarea>
+            </div>
+
+            <button class="btn btn-primary" id="createBtn">Criar tarefa</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <div class="kicker">Aberto</div>
+              <h2 class="title-blue">Quadro</h2>
+            </div>
+            <div class="tag"><span id="taskCount">0</span> tarefas</div>
+          </div>
+
+          <div class="task-list" id="taskList">
+            <div class="task">
+              <div class="task-title">Nenhuma tarefa aberta</div>
+              <p>Crie uma tarefa ou toque em “Demo”.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col desktop-sticky">
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <div class="kicker">Pool</div>
+              <h2 class="title-blue">Recompensas</h2>
+            </div>
+            <div class="tag">Teste</div>
+          </div>
+
+          <div class="compact-grid">
+            <div class="metric">
+              <small>USDC</small>
+              <strong id="usdcPool">50.00</strong>
+              <span>saldo para tarefas</span>
+            </div>
+
+            <div class="metric">
+              <small>EURC</small>
+              <strong class="blue" id="eurcPool">30.00</strong>
+              <span>saldo para tarefas</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <div class="kicker">Contribuidor</div>
+              <h2 class="title-black">Prova + IA</h2>
+            </div>
+            <div class="tag" id="selectedTag">Nada</div>
+          </div>
+
+          <div class="form">
+            <div class="field">
+              <label>Tarefa selecionada</label>
+              <input id="selectedTask" readonly placeholder="Escolha uma tarefa no quadro" />
+            </div>
+
+            <div class="field">
+              <label>Feedback / prova</label>
+              <textarea id="proofText" placeholder="Ex: testei no Android com MetaMask. Conectou bem, mas encontrei bug no botão final."></textarea>
+            </div>
+
+            <button class="btn btn-light" id="reviewBtn">Analisar prova</button>
+
+            <div class="review">
+              <div class="review-line">
+                <span class="dot"></span>
+                <span id="reviewState">Aguardando prova</span>
+              </div>
+
+              <div class="result">
+                <div class="result-box">
+                  <small>Qualidade</small>
+                  <b id="qualityText">Sem análise</b>
+                </div>
+
+                <div class="result-box">
+                  <small>Sugestão</small>
+                  <b id="suggestText">Envie uma prova</b>
+                </div>
+              </div>
+
+              <div class="row">
+                <button class="btn btn-primary" id="approveBtn" disabled>Aprovar</button>
+                <button class="btn btn-dark" id="rejectBtn" disabled>Rejeitar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <div class="kicker">Contribuidor</div>
+              <h2 class="title-blue">Perfil</h2>
+            </div>
+            <div class="tag">Reputação</div>
+          </div>
+
+          <div class="profile-strip">
+            <div class="profile-item">
+              <small>Feitas</small>
+              <b id="doneCount">0</b>
+            </div>
+
+            <div class="profile-item">
+              <small>Ganho</small>
+              <b id="earnedValue">0.00</b>
+            </div>
+
+            <div class="profile-item">
+              <small>Score</small>
+              <b id="scoreValue">72</b>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      BountyFlow: tarefa → abrir projeto → prova → revisão com IA → recompensa.
+    </div>
+  </main>
+
+  <footer class="bottombar">
+    <div class="bottombar-inner">
+      <a href="#" class="social-link">GitHub</a>
+      <a href="#" class="social-link">X</a>
+      <a href="#" class="social-link">Discord</a>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">ok</div>
+
+  <script>
+    const state = {
+      connected:false,
+      token:"USDC",
+      selectedId:null,
+      currentReview:null,
+      pools:{ USDC:50, EURC:30 },
+      tasks:[],
+      profile:{ done:0, earned:0, score:72 }
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    const walletText = $("walletText");
+    const walletBtn = $("walletBtn");
+    const demoBtn = $("demoBtn");
+    const usdcPool = $("usdcPool");
+    const eurcPool = $("eurcPool");
+    const tokenTag = $("tokenTag");
+    const taskTitle = $("taskTitle");
+    const taskLink = $("taskLink");
+    const taskReward = $("taskReward");
+    const taskSlots = $("taskSlots");
+    const taskProof = $("taskProof");
+    const createBtn = $("createBtn");
+    const taskList = $("taskList");
+    const taskCount = $("taskCount");
+    const selectedTag = $("selectedTag");
+    const selectedTask = $("selectedTask");
+    const proofText = $("proofText");
+    const reviewBtn = $("reviewBtn");
+    const reviewState = $("reviewState");
+    const qualityText = $("qualityText");
+    const suggestText = $("suggestText");
+    const approveBtn = $("approveBtn");
+    const rejectBtn = $("rejectBtn");
+    const doneCount = $("doneCount");
+    const earnedValue = $("earnedValue");
+    const scoreValue = $("scoreValue");
+    const toast = $("toast");
+
+    function money(v){
+      return Number(v).toFixed(2);
+    }
+
+    function id(){
+      return Math.random().toString(36).slice(2,9);
+    }
+
+    function escapeHTML(text){
+      return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function cleanUrl(url){
+      let value = String(url || "").trim();
+
+      if(!value){
+        return "";
+      }
+
+      if(!value.startsWith("http://") && !value.startsWith("https://")){
+        value = "https://" + value;
+      }
+
+      return value;
+    }
+
+    function shortUrl(url){
+      return String(url)
+        .replace("https://", "")
+        .replace("http://", "")
+        .replace(/\/$/, "");
+    }
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1600);
+    }
+
+    function setReviewButtons(active){
+      approveBtn.disabled = !active;
+      rejectBtn.disabled = !active;
+    }
+
+    function render(){
+      walletText.textContent = state.connected ? "Conectada" : "Não conectada";
+      walletBtn.textContent = state.connected ? "Desconectar" : "Conectar";
+
+      usdcPool.textContent = money(state.pools.USDC);
+      eurcPool.textContent = money(state.pools.EURC);
+      tokenTag.textContent = state.token;
+
+      taskCount.textContent = state.tasks.length;
+
+      doneCount.textContent = state.profile.done;
+      earnedValue.textContent = money(state.profile.earned);
+      scoreValue.textContent = state.profile.score;
+
+      renderTasks();
+    }
+
+    function renderTasks(){
+      if(!state.tasks.length){
+        taskList.innerHTML = `
+          <div class="task">
+            <div class="task-title">Nenhuma tarefa aberta</div>
+            <p>Crie uma tarefa ou toque em “Demo”.</p>
+          </div>
+        `;
+        return;
+      }
+
+      taskList.innerHTML = state.tasks.map(task => `
+        <div class="task">
+          <div class="task-top">
+            <div class="task-title">${escapeHTML(task.title)}</div>
+            <div class="reward">${money(task.reward)} ${task.token}</div>
+          </div>
+
+          <div class="task-link">${escapeHTML(shortUrl(task.link))}</div>
+
+          <p>${escapeHTML(task.proof)}</p>
+
+          <div class="task-bottom">
+            <div class="slots">${task.slots} vagas</div>
+            <div style="display:flex;gap:6px;">
+              <button class="open-btn" data-open="${task.id}">Abrir projeto</button>
+              <button class="small-btn" data-select="${task.id}">Usar</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function resetReview(){
+      state.currentReview = null;
+      reviewState.textContent = "Aguardando prova";
+      qualityText.textContent = "Sem análise";
+      suggestText.textContent = "Envie uma prova";
+      setReviewButtons(false);
+    }
+
+    function createTask(){
+      const title = taskTitle.value.trim();
+      const link = cleanUrl(taskLink.value);
+      const reward = Number(taskReward.value);
+      const slots = Number(taskSlots.value);
+      const proof = taskProof.value.trim();
+
+      if(!title || !link || !reward || !slots || !proof){
+        showToast("Preencha a tarefa");
+        return;
+      }
+
+      if(reward <= 0){
+        showToast("Recompensa inválida");
+        return;
+      }
+
+      if(slots <= 0){
+        showToast("Vagas inválidas");
+        return;
+      }
+
+      const totalNeeded = reward * slots;
+
+      if(totalNeeded > state.pools[state.token]){
+        showToast("Pool insuficiente");
+        return;
+      }
+
+      state.tasks.unshift({
+        id:id(),
+        title,
+        link,
+        reward,
+        slots,
+        proof,
+        token:state.token
+      });
+
+      taskTitle.value = "";
+      taskLink.value = "";
+      taskReward.value = "";
+      taskSlots.value = "";
+      taskProof.value = "";
+
+      showToast("Tarefa criada");
+      render();
+    }
+
+    function seedDemo(){
+      state.tasks = [
+        {
+          id:id(),
+          title:"Conectar carteira na StableFlow",
+          link:"https://ediferras4.github.io/stableflow/",
+          reward:0.20,
+          slots:10,
+          proof:"Abra a StableFlow, tente conectar sua carteira na Arc Testnet e envie carteira usada, navegador, aparelho e se conectou.",
+          token:"USDC"
+        },
+        {
+          id:id(),
+          title:"Avaliar tela Get Paid",
+          link:"https://ediferras4.github.io/stableflow/",
+          reward:0.15,
+          slots:8,
+          proof:"Abra a tela Get Paid e diga se o pedido de pagamento ficou claro para um novo usuário.",
+          token:"EURC"
+        }
+      ];
+
+      showToast("Demo criada");
+      render();
+    }
+
+    function selectTask(taskId){
+      const task = state.tasks.find(t => t.id === taskId);
+      if(!task) return;
+
+      state.selectedId = taskId;
+      selectedTask.value = task.title;
+      selectedTag.textContent = `${money(task.reward)} ${task.token}`;
+      proofText.value = "";
+      resetReview();
+
+      showToast("Tarefa selecionada");
+    }
+
+    function openProject(taskId){
+      const task = state.tasks.find(t => t.id === taskId);
+      if(!task) return;
+
+      window.open(task.link, "_blank", "noopener,noreferrer");
+    }
+
+    function analyzeProof(){
+      const task = state.tasks.find(t => t.id === state.selectedId);
+      const text = proofText.value.trim().toLowerCase();
+
+      if(!task){
+        showToast("Escolha uma tarefa");
+        return;
+      }
+
+      if(!text){
+        showToast("Escreva a prova");
+        return;
+      }
+
+      const words = [
+        "bug",
+        "botão",
+        "tela",
+        "carteira",
+        "android",
+        "iphone",
+        "desktop",
+        "navegador",
+        "funcionou",
+        "erro",
+        "pay",
+        "qr",
+        "conectou",
+        "layout",
+        "metamask",
+        "rabby",
+        "okx"
+      ];
+
+      let hits = 0;
+
+      words.forEach(w => {
+        if(text.includes(w)) hits++;
+      });
+
+      let quality = "Fraca";
+      let suggestion = "Pedir mais detalhes";
+
+      if(text.length > 120 && hits >= 5){
+        quality = "Forte";
+        suggestion = "Aprovar";
+      }else if(text.length > 60 && hits >= 2){
+        quality = "Boa";
+        suggestion = "Pode aprovar";
+      }
+
+      state.currentReview = { task };
+
+      reviewState.textContent = "Análise concluída";
+      qualityText.textContent = quality;
+      suggestText.textContent = suggestion;
+      setReviewButtons(true);
+
+      showToast("IA analisou");
+    }
+
+    function approve(){
+      if(!state.currentReview){
+        showToast("Nada para aprovar");
+        return;
+      }
+
+      const task = state.currentReview.task;
+
+      if(state.pools[task.token] < task.reward){
+        showToast("Pool insuficiente");
+        return;
+      }
+
+      state.pools[task.token] -= task.reward;
+      state.profile.done += 1;
+      state.profile.earned += task.reward;
+      state.profile.score = Math.min(99, state.profile.score + 3);
+
+      task.slots -= 1;
+
+      if(task.slots <= 0){
+        state.tasks = state.tasks.filter(t => t.id !== task.id);
+      }
+
+      state.selectedId = null;
+      selectedTask.value = "";
+      selectedTag.textContent = "Nada";
+      proofText.value = "";
+      reviewState.textContent = "Pagamento aprovado";
+      qualityText.textContent = "Aguardando";
+      suggestText.textContent = "Escolha nova tarefa";
+      setReviewButtons(false);
+      state.currentReview = null;
+
+      showToast("Aprovado e pago");
+      render();
+    }
+
+    function reject(){
+      if(!state.currentReview){
+        showToast("Nada para rejeitar");
+        return;
+      }
+
+      state.profile.score = Math.max(40, state.profile.score - 1);
+      state.currentReview = null;
+      reviewState.textContent = "Prova rejeitada";
+      qualityText.textContent = "Aguardando";
+      suggestText.textContent = "Envie outra prova";
+      setReviewButtons(false);
+
+      showToast("Rejeitado");
+      render();
+    }
+
+    walletBtn.addEventListener("click", () => {
+      state.connected = !state.connected;
+      showToast(state.connected ? "Carteira conectada" : "Carteira desconectada");
+      render();
+    });
+
+    demoBtn.addEventListener("click", seedDemo);
+    createBtn.addEventListener("click", createTask);
+    reviewBtn.addEventListener("click", analyzeProof);
+    approveBtn.addEventListener("click", approve);
+    rejectBtn.addEventListener("click", reject);
+
+    document.querySelectorAll(".token-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.token = btn.dataset.token;
+        document.querySelectorAll(".token-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        render();
+      });
+    });
+
+    taskList.addEventListener("click", (e) => {
+      const selectBtn = e.target.closest("[data-select]");
+      const openBtn = e.target.closest("[data-open]");
+
+      if(openBtn){
+        openProject(openBtn.dataset.open);
+        return;
+      }
+
+      if(selectBtn){
+        selectTask(selectBtn.dataset.select);
+      }
+    });
+
+    setReviewButtons(false);
+    render();
+  </script>
+</body>
+  </html>
