@@ -142,20 +142,30 @@
     }
 
     .logo{
-      width:38px;
-      height:38px;
-      border-radius:14px;
+      width:42px;
+      height:42px;
+      border-radius:15px;
       flex-shrink:0;
       display:grid;
       place-items:center;
-      color:#fff;
+      overflow:hidden;
+      color:var(--blue-deep);
       font-weight:950;
       font-size:14px;
       letter-spacing:.02em;
       background:
-        radial-gradient(circle at 28% 20%, rgba(255,255,255,.25), transparent 26%),
-        linear-gradient(145deg, var(--orange-deep), var(--orange), var(--orange-soft));
-      box-shadow:0 9px 18px rgba(221,101,0,.19);
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.98), rgba(255,246,232,.94));
+      border:1px solid rgba(255,255,255,.78);
+      box-shadow:
+        0 9px 18px rgba(221,101,0,.14),
+        inset 0 1px 0 rgba(255,255,255,.7);
+    }
+
+    .logo img{
+      width:92%;
+      height:92%;
+      object-fit:contain;
+      display:block;
     }
 
     .brand-copy{
@@ -710,7 +720,6 @@
       padding:2px 4px 14px;
     }
 
-    /* RODAPÉ NO FIM DA PÁGINA — NÃO FIXO */
     .bottombar{
       position:relative;
       width:100%;
@@ -821,10 +830,9 @@
       }
 
       .logo{
-        width:40px;
-        height:40px;
+        width:42px;
+        height:42px;
         border-radius:15px;
-        font-size:15px;
       }
 
       .mini-card{
@@ -866,10 +874,9 @@
       }
 
       .logo{
-        width:42px;
-        height:42px;
-        border-radius:15px;
-        font-size:15px;
+        width:44px;
+        height:44px;
+        border-radius:16px;
       }
 
       .workspace{
@@ -931,9 +938,9 @@
       }
 
       .logo{
-        width:36px;
-        height:36px;
-        font-size:13.5px;
+        width:38px;
+        height:38px;
+        border-radius:14px;
       }
 
       .social-link{
@@ -952,7 +959,13 @@
       <section class="hero-head">
         <div class="hero-grid">
           <div class="brand">
-            <div class="logo">BF</div>
+            <div class="logo">
+              <img
+                src="logo.png"
+                alt="BountyFlow logo"
+                onerror="this.remove(); this.parentElement.textContent='BF';"
+              />
+            </div>
 
             <div class="brand-copy">
               <h1>Bounty<span>Flow</span></h1>
