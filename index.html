@@ -38,6 +38,10 @@
       --gold-3:#8b621f;
       --gold-soft:rgba(216,173,98,.14);
 
+      --green:#2eb872;
+      --green-2:#dff8ea;
+      --green-3:#0f6b3e;
+
       --blue:#0b4cc2;
       --blue-deep:#102e67;
       --blue-soft:#eaf1ff;
@@ -471,6 +475,21 @@
         inset 0 1px 0 rgba(255,255,255,.76);
     }
 
+    .tag-btn{
+      border-radius:999px;
+      padding:7px 10px;
+      background:
+        linear-gradient(180deg, rgba(8,9,11,.94), rgba(19,21,25,.94));
+      border:1px solid rgba(216,173,98,.22);
+      color:var(--ice);
+      font-size:10.5px;
+      font-weight:760;
+      white-space:nowrap;
+      box-shadow:
+        0 5px 12px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.045);
+    }
+
     .form{
       display:flex;
       flex-direction:column;
@@ -650,7 +669,8 @@
     }
 
     .task-list,
-    .proof-list{
+    .proof-list,
+    .reward-list{
       display:flex;
       flex-direction:column;
       gap:8px;
@@ -658,8 +678,13 @@
       z-index:1;
     }
 
+    .reward-list[hidden]{
+      display:none;
+    }
+
     .task,
-    .proof-card{
+    .proof-card,
+    .reward-card{
       border-radius:16px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.99), rgba(241,244,245,.95));
@@ -670,8 +695,32 @@
         0 5px 12px rgba(0,0,0,.035);
     }
 
+    .reward-card.status-approved{
+      background:
+        radial-gradient(circle at 100% 0%, rgba(46,184,114,.16), transparent 30%),
+        linear-gradient(180deg, #f7fff9, var(--green-2));
+      border:1px solid rgba(46,184,114,.32);
+      box-shadow:
+        0 8px 18px rgba(46,184,114,.12),
+        inset 0 1px 0 rgba(255,255,255,.82);
+    }
+
+    .reward-card.status-pending{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.99), rgba(241,244,245,.95));
+      border:1px solid rgba(216,173,98,.22);
+    }
+
+    .reward-card.status-rejected{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.94), rgba(232,235,237,.92));
+      border:1px solid rgba(16,18,22,.10);
+      opacity:.82;
+    }
+
     .task-top,
-    .proof-top{
+    .proof-top,
+    .reward-top{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
@@ -680,7 +729,8 @@
     }
 
     .task-title,
-    .proof-title{
+    .proof-title,
+    .reward-title{
       font-size:14px;
       line-height:1.22;
       color:#111318;
@@ -699,13 +749,54 @@
       border:1px solid rgba(216,173,98,.18);
     }
 
+    .paid-badge{
+      border-radius:11px;
+      padding:6px 8px;
+      background:rgba(46,184,114,.16);
+      color:var(--green-3);
+      font-size:10.5px;
+      font-weight:900;
+      white-space:nowrap;
+      flex-shrink:0;
+      border:1px solid rgba(46,184,114,.25);
+    }
+
+    .pending-badge{
+      border-radius:11px;
+      padding:6px 8px;
+      background:rgba(216,173,98,.14);
+      color:#75541f;
+      font-size:10.5px;
+      font-weight:860;
+      white-space:nowrap;
+      flex-shrink:0;
+      border:1px solid rgba(216,173,98,.20);
+    }
+
+    .rejected-badge{
+      border-radius:11px;
+      padding:6px 8px;
+      background:rgba(16,18,22,.08);
+      color:#5f6670;
+      font-size:10.5px;
+      font-weight:860;
+      white-space:nowrap;
+      flex-shrink:0;
+      border:1px solid rgba(16,18,22,.10);
+    }
+
     .task p,
-    .proof-card p{
+    .proof-card p,
+    .reward-card p{
       font-size:11.5px;
       line-height:1.32;
       color:#626872;
       font-weight:640;
       margin-bottom:8px;
+    }
+
+    .reward-card.status-approved p{
+      color:#23543c;
     }
 
     .task-link{
@@ -1366,6 +1457,23 @@
           <section class="card">
             <div class="card-head">
               <div>
+                <div class="kicker">Tester</div>
+                <h2 class="title-blue">Minhas provas</h2>
+              </div>
+              <button class="tag-btn" id="rewardsToggle">Abrir</button>
+            </div>
+
+            <div class="reward-list" id="testerRewardList" hidden>
+              <div class="reward-card">
+                <div class="reward-title">Nenhuma prova enviada</div>
+                <p>Quando você enviar uma prova, o status aparece aqui.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div>
                 <div class="kicker">Contribuidor</div>
                 <h2 class="title-blue">Perfil</h2>
               </div>
@@ -1418,7 +1526,7 @@
       mode:"tester",
       token:"USDC",
       selectedId:null,
-      currentReview:null,
+      rewardsOpen:false,
       pools:{ USDC:50, EURC:30 },
       reserved:{ USDC:0, EURC:0 },
       tasks:[],
@@ -1462,6 +1570,9 @@
     const reviewState = $("reviewState");
     const qualityText = $("qualityText");
     const suggestText = $("suggestText");
+
+    const testerRewardList = $("testerRewardList");
+    const rewardsToggle = $("rewardsToggle");
 
     const creatorProofList = $("creatorProofList");
     const proofCountTag = $("proofCountTag");
@@ -1568,7 +1679,7 @@
 
       modeNote.textContent = mode === "creator"
         ? "Criador cria tarefas, reserva recompensa e aprova provas recebidas."
-        : "Tester escolhe uma tarefa, abre o projeto, envia prova e aguarda aprovação.";
+        : "Tester escolhe uma tarefa, abre o projeto, envia prova e acompanha em Minhas provas.";
 
       resetProofForm();
       render();
@@ -1645,6 +1756,12 @@
       suggestText.textContent = "Envie uma prova";
     }
 
+    function statusLabel(status){
+      if(status === "approved") return "PAGO ✔";
+      if(status === "rejected") return "Rejeitada";
+      return "Aguardando";
+    }
+
     function render(){
       walletText.textContent = state.connected ? shortWallet(state.wallet) : "Não conectada";
       walletBtn.textContent = state.connected ? "Desconectar" : "Conectar";
@@ -1670,10 +1787,14 @@
       earnedValue.textContent = money(profile.earned);
       scoreValue.textContent = profile.score;
 
+      rewardsToggle.textContent = state.rewardsOpen ? "Fechar" : "Abrir";
+      testerRewardList.hidden = !state.rewardsOpen;
+
       updateReservePreview();
       renderPublicTasks(openTasks);
       renderMyTasks(myTasks);
       renderCreatorProofs();
+      renderTesterRewards();
     }
 
     function renderPublicTasks(tasks){
@@ -1816,6 +1937,78 @@
             <div class="proof-actions" style="margin-top:8px;">
               <button class="pay-btn" data-approve="${proof.id}">Aprovar e pagar</button>
               <button class="small-btn" data-reject="${proof.id}">Rejeitar</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderTesterRewards(){
+      if(!state.connected){
+        testerRewardList.innerHTML = `
+          <div class="reward-card">
+            <div class="reward-title">Conecte a carteira</div>
+            <p>Suas provas, aprovações e recompensas aparecem aqui.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const proofs = state.proofs.filter(proof => proof.tester === state.wallet);
+
+      if(!proofs.length){
+        testerRewardList.innerHTML = `
+          <div class="reward-card">
+            <div class="reward-title">Nenhuma prova enviada</div>
+            <p>Escolha uma tarefa no quadro, envie sua prova e acompanhe o status aqui.</p>
+          </div>
+        `;
+        return;
+      }
+
+      testerRewardList.innerHTML = proofs.map(proof => {
+        const task = state.tasks.find(item => item.id === proof.taskId);
+        const status = proof.status;
+        const badgeClass = status === "approved"
+          ? "paid-badge"
+          : status === "rejected"
+            ? "rejected-badge"
+            : "pending-badge";
+
+        const cardClass = status === "approved"
+          ? "reward-card status-approved"
+          : status === "rejected"
+            ? "reward-card status-rejected"
+            : "reward-card status-pending";
+
+        const title = task ? task.title : "Tarefa";
+        const amount = task ? `${money(task.reward)} ${task.token}` : "";
+
+        const message = status === "approved"
+          ? `Recompensa liberada: ${amount}. Seu perfil foi atualizado.`
+          : status === "rejected"
+            ? "Sua prova foi rejeitada. Você pode tentar outra tarefa."
+            : "Sua prova foi enviada e está aguardando revisão do criador.";
+
+        return `
+          <div class="${cardClass}">
+            <div class="reward-top">
+              <div class="reward-title">${escapeHTML(title)}</div>
+              <div class="${badgeClass}">${statusLabel(status)}</div>
+            </div>
+
+            <p>${escapeHTML(message)}</p>
+
+            <div class="result">
+              <div class="result-box">
+                <small>Recompensa</small>
+                <b>${escapeHTML(amount || "—")}</b>
+              </div>
+
+              <div class="result-box">
+                <small>IA / qualidade</small>
+                <b>${escapeHTML(proof.quality)} — ${escapeHTML(proof.suggestion)}</b>
+              </div>
             </div>
           </div>
         `;
@@ -2050,6 +2243,8 @@
         createdAt:Date.now()
       });
 
+      state.rewardsOpen = true;
+
       reviewState.textContent = "Prova enviada";
       qualityText.textContent = analysis.quality;
       suggestText.textContent = analysis.suggestion;
@@ -2149,6 +2344,11 @@
     demoBtn.addEventListener("click", seedDemo);
     createBtn.addEventListener("click", createTask);
     submitProofBtn.addEventListener("click", submitProof);
+
+    rewardsToggle.addEventListener("click", () => {
+      state.rewardsOpen = !state.rewardsOpen;
+      render();
+    });
 
     taskReward.addEventListener("input", updateReservePreview);
     taskSlots.addEventListener("input", updateReservePreview);
