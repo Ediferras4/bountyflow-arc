@@ -19,7 +19,7 @@
     :root{
       --bg:#050607;
       --bg-2:#0b0d10;
-      --bg-3:#12100b;
+      --bg-3:#020303;
 
       --ink:#101216;
       --soft:#5f6670;
@@ -33,19 +33,18 @@
       --black-2:#111318;
       --black-3:#171a20;
 
-      --gold:#d9ad63;
+      --gold:#d8ad62;
       --gold-2:#f0cf8a;
-      --gold-3:#8f6425;
-      --gold-soft:rgba(217,173,99,.14);
+      --gold-3:#8b621f;
+      --gold-soft:rgba(216,173,98,.14);
 
       --blue:#0b4cc2;
-      --blue-deep:#062f83;
+      --blue-deep:#102e67;
       --blue-soft:#eaf1ff;
 
       --line:rgba(18,18,18,.105);
-      --line-strong:rgba(18,18,18,.16);
-      --line-gold:rgba(217,173,99,.34);
-      --line-gold-soft:rgba(217,173,99,.16);
+      --line-gold:rgba(216,173,98,.34);
+      --line-gold-soft:rgba(216,173,98,.16);
 
       --shadow:0 16px 34px rgba(0,0,0,.22);
       --shadow-soft:0 9px 22px rgba(0,0,0,.16);
@@ -62,10 +61,10 @@
       font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       color:var(--ink);
       background:
-        radial-gradient(circle at 16% 0%, rgba(217,173,99,.105), transparent 28%),
+        radial-gradient(circle at 16% 0%, rgba(216,173,98,.105), transparent 28%),
         radial-gradient(circle at 85% 8%, rgba(255,255,255,.045), transparent 26%),
-        radial-gradient(circle at 50% 66%, rgba(217,173,99,.075), transparent 44%),
-        linear-gradient(180deg,var(--bg-2) 0%,var(--bg) 48%,#030303 100%);
+        radial-gradient(circle at 50% 66%, rgba(216,173,98,.075), transparent 44%),
+        linear-gradient(180deg,var(--bg-2) 0%,var(--bg) 48%,var(--bg-3) 100%);
     }
 
     body{
@@ -95,7 +94,7 @@
       height:var(--topbar-h);
       z-index:90;
       background:
-        radial-gradient(circle at 18% 0%, rgba(217,173,99,.10), transparent 30%),
+        radial-gradient(circle at 18% 0%, rgba(216,173,98,.10), transparent 30%),
         radial-gradient(circle at 92% 0%, rgba(255,255,255,.035), transparent 28%),
         linear-gradient(180deg, #030405 0%, #090a0d 100%);
       box-shadow:
@@ -111,7 +110,7 @@
       bottom:0;
       height:1px;
       background:
-        linear-gradient(90deg, transparent, rgba(217,173,99,.52), rgba(255,255,255,.08), transparent);
+        linear-gradient(90deg, transparent, rgba(216,173,98,.52), rgba(255,255,255,.08), transparent);
       pointer-events:none;
     }
 
@@ -130,14 +129,14 @@
       border-radius:22px;
       padding:9px;
       background:
-        radial-gradient(circle at 0% 0%, rgba(217,173,99,.14), transparent 31%),
+        radial-gradient(circle at 0% 0%, rgba(216,173,98,.14), transparent 31%),
         radial-gradient(circle at 100% 0%, rgba(255,255,255,.055), transparent 30%),
         linear-gradient(145deg, rgba(16,18,22,.985), rgba(7,8,10,.985));
-      border:1px solid rgba(217,173,99,.24);
+      border:1px solid rgba(216,173,98,.24);
       box-shadow:
         0 18px 36px rgba(0,0,0,.34),
         inset 0 1px 0 rgba(255,255,255,.065),
-        inset 0 -1px 0 rgba(217,173,99,.13);
+        inset 0 -1px 0 rgba(216,173,98,.13);
     }
 
     .hero-grid{
@@ -168,7 +167,7 @@
       letter-spacing:.02em;
       background:
         radial-gradient(circle at 30% 20%, rgba(255,255,255,.96), rgba(235,232,221,.92));
-      border:1px solid rgba(217,173,99,.42);
+      border:1px solid rgba(216,173,98,.42);
       box-shadow:
         0 10px 20px rgba(0,0,0,.26),
         0 0 0 1px rgba(255,255,255,.035),
@@ -230,7 +229,7 @@
       padding:5px 8px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.98), rgba(240,243,244,.94));
-      border:1px solid rgba(217,173,99,.20);
+      border:1px solid rgba(216,173,98,.20);
       box-shadow:
         0 5px 12px rgba(0,0,0,.12),
         inset 0 1px 0 rgba(255,255,255,.78);
@@ -288,7 +287,7 @@
         linear-gradient(145deg, #a8752e, var(--gold), #f0cf8a);
       box-shadow:
         0 10px 20px rgba(0,0,0,.22),
-        0 0 0 1px rgba(217,173,99,.24),
+        0 0 0 1px rgba(216,173,98,.24),
         inset 0 1px 0 rgba(255,255,255,.26);
     }
 
@@ -296,7 +295,7 @@
       color:#111318;
       background:
         linear-gradient(180deg, rgba(255,255,255,.99), rgba(238,241,243,.94));
-      border:1px solid rgba(217,173,99,.22);
+      border:1px solid rgba(216,173,98,.22);
       box-shadow:
         0 7px 16px rgba(0,0,0,.12),
         inset 0 1px 0 rgba(255,255,255,.78);
@@ -319,7 +318,7 @@
       border-radius:20px;
       background:
         linear-gradient(180deg, rgba(14,16,20,.96), rgba(8,9,11,.96));
-      border:1px solid rgba(217,173,99,.19);
+      border:1px solid rgba(216,173,98,.19);
       box-shadow:
         var(--shadow-soft),
         inset 0 1px 0 rgba(255,255,255,.035);
@@ -335,7 +334,7 @@
       border-radius:13px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.96), rgba(237,240,242,.94));
-      border:1px solid rgba(217,173,99,.14);
+      border:1px solid rgba(216,173,98,.14);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -352,10 +351,10 @@
 
     .step.active{
       background:
-        radial-gradient(circle at 20% 10%, rgba(217,173,99,.16), transparent 34%),
+        radial-gradient(circle at 20% 10%, rgba(216,173,98,.16), transparent 34%),
         linear-gradient(145deg, #f7f8f5, #ffffff);
       color:#111318;
-      border-color:rgba(217,173,99,.34);
+      border-color:rgba(216,173,98,.34);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.82),
         0 5px 14px rgba(0,0,0,.10);
@@ -378,7 +377,7 @@
       position:relative;
       border-radius:24px;
       background:
-        radial-gradient(circle at 100% 0%, rgba(217,173,99,.075), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(216,173,98,.075), transparent 28%),
         linear-gradient(180deg,var(--ice-2),var(--ice));
       border:1px solid rgba(255,255,255,.72);
       box-shadow:
@@ -396,7 +395,7 @@
       right:18px;
       top:0;
       height:1px;
-      background:linear-gradient(90deg, transparent, rgba(217,173,99,.36), transparent);
+      background:linear-gradient(90deg, transparent, rgba(216,173,98,.36), transparent);
       pointer-events:none;
     }
 
@@ -441,7 +440,7 @@
       padding:7px 10px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.99), rgba(239,242,243,.94));
-      border:1px solid rgba(217,173,99,.18);
+      border:1px solid rgba(216,173,98,.18);
       font-size:10.5px;
       font-weight:830;
       white-space:nowrap;
@@ -498,9 +497,9 @@
 
     input:focus,
     textarea:focus{
-      border-color:rgba(217,173,99,.48);
+      border-color:rgba(216,173,98,.48);
       box-shadow:
-        0 0 0 4px rgba(217,173,99,.13),
+        0 0 0 4px rgba(216,173,98,.13),
         inset 0 1px 0 rgba(255,255,255,.82);
     }
 
@@ -524,7 +523,7 @@
       color:#111318;
       background:
         linear-gradient(180deg, rgba(255,255,255,.99), rgba(239,242,243,.94));
-      border:1px solid rgba(217,173,99,.18);
+      border:1px solid rgba(216,173,98,.18);
       transition:.16s ease;
       box-shadow:
         0 5px 13px rgba(0,0,0,.055),
@@ -533,13 +532,41 @@
 
     .token-btn.active{
       color:#17120a;
-      border-color:rgba(217,173,99,.38);
+      border-color:rgba(216,173,98,.38);
       background:
         radial-gradient(circle at 24% 15%, rgba(255,255,255,.28), transparent 24%),
         linear-gradient(145deg, #a8752e, var(--gold), #f0cf8a);
       box-shadow:
         0 10px 20px rgba(0,0,0,.15),
         inset 0 1px 0 rgba(255,255,255,.22);
+    }
+
+    .reserve-preview{
+      border-radius:14px;
+      padding:9px 11px;
+      background:
+        linear-gradient(180deg, rgba(216,173,98,.13), rgba(255,255,255,.42));
+      border:1px solid rgba(216,173,98,.18);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color:#17120a;
+    }
+
+    .reserve-preview span{
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:780;
+      color:#7c612e;
+    }
+
+    .reserve-preview b{
+      font-size:12.5px;
+      font-weight:850;
+      color:#111318;
+      text-align:right;
     }
 
     .compact-grid{
@@ -554,7 +581,7 @@
         linear-gradient(180deg, rgba(255,255,255,.99), rgba(241,244,245,.95));
       border:1px solid rgba(16,18,22,.10);
       padding:11px;
-      min-height:76px;
+      min-height:88px;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.78),
         0 5px 12px rgba(0,0,0,.035);
@@ -586,10 +613,19 @@
 
     .metric span{
       display:block;
-      font-size:11px;
+      font-size:10.6px;
       line-height:1.22;
       color:#626872;
       font-weight:650;
+    }
+
+    .metric em{
+      display:block;
+      margin-top:4px;
+      font-style:normal;
+      font-size:10px;
+      color:#7c612e;
+      font-weight:760;
     }
 
     .task-list{
@@ -629,13 +665,13 @@
     .reward{
       border-radius:11px;
       padding:6px 8px;
-      background:rgba(217,173,99,.15);
+      background:rgba(216,173,98,.15);
       color:#17120a;
       font-size:10.5px;
       font-weight:820;
       white-space:nowrap;
       flex-shrink:0;
-      border:1px solid rgba(217,173,99,.18);
+      border:1px solid rgba(216,173,98,.18);
     }
 
     .task p{
@@ -650,8 +686,8 @@
       margin-bottom:8px;
       border-radius:13px;
       padding:8px 9px;
-      background:rgba(217,173,99,.105);
-      border:1px solid rgba(217,173,99,.18);
+      background:rgba(216,173,98,.105);
+      border:1px solid rgba(216,173,98,.18);
       color:#102e67;
       font-size:10.5px;
       font-weight:780;
@@ -673,8 +709,8 @@
       font-size:9.5px;
       font-weight:820;
       color:#6f4817;
-      background:rgba(217,173,99,.13);
-      border:1px solid rgba(217,173,99,.18);
+      background:rgba(216,173,98,.13);
+      border:1px solid rgba(216,173,98,.18);
     }
 
     .small-btn{
@@ -686,7 +722,7 @@
       color:#f7f8f5;
       background:
         linear-gradient(145deg,#08090b,#20242b);
-      border:1px solid rgba(217,173,99,.12);
+      border:1px solid rgba(216,173,98,.12);
       box-shadow:0 7px 14px rgba(0,0,0,.15);
     }
 
@@ -731,7 +767,7 @@
       height:9px;
       border-radius:50%;
       background:var(--gold);
-      box-shadow:0 0 0 5px rgba(217,173,99,.14);
+      box-shadow:0 0 0 5px rgba(216,173,98,.14);
     }
 
     .result{
@@ -743,8 +779,8 @@
     .result-box{
       border-radius:14px;
       background:
-        linear-gradient(180deg, rgba(217,173,99,.115), rgba(255,255,255,.42));
-      border:1px solid rgba(217,173,99,.16);
+        linear-gradient(180deg, rgba(216,173,98,.115), rgba(255,255,255,.42));
+      border:1px solid rgba(216,173,98,.16);
       padding:9px;
     }
 
@@ -817,9 +853,9 @@
       padding-bottom:env(safe-area-inset-bottom);
       z-index:5;
       background:
-        radial-gradient(circle at 50% 0%, rgba(217,173,99,.08), transparent 55%),
+        radial-gradient(circle at 50% 0%, rgba(216,173,98,.08), transparent 55%),
         linear-gradient(180deg, rgba(5,6,7,.988) 0%, rgba(10,11,13,.99) 100%);
-      border-top:1px solid rgba(217,173,99,.16);
+      border-top:1px solid rgba(216,173,98,.16);
       box-shadow:
         0 -10px 24px rgba(0,0,0,.28),
         inset 0 1px 0 rgba(255,255,255,.035);
@@ -832,7 +868,7 @@
       right:0;
       top:0;
       height:1px;
-      background:linear-gradient(90deg, transparent, rgba(217,173,99,.34), transparent);
+      background:linear-gradient(90deg, transparent, rgba(216,173,98,.34), transparent);
       pointer-events:none;
     }
 
@@ -857,7 +893,7 @@
       font-size:10.5px;
       font-weight:760;
       color:#f7f8f5;
-      border:1px solid rgba(217,173,99,.20);
+      border:1px solid rgba(216,173,98,.20);
       background:
         linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
       box-shadow:
@@ -881,7 +917,7 @@
       z-index:120;
       background:#090a0c;
       color:#f7f8f5;
-      border:1px solid rgba(217,173,99,.24);
+      border:1px solid rgba(216,173,98,.24);
       border-radius:999px;
       padding:10px 13px;
       font-size:12px;
@@ -1121,18 +1157,23 @@
             <div class="row">
               <div class="field">
                 <label>Recompensa</label>
-                <input id="taskReward" type="number" step="0.01" placeholder="0.20" />
+                <input id="taskReward" type="number" step="0.01" min="0.01" placeholder="0.20" />
               </div>
 
               <div class="field">
                 <label>Vagas</label>
-                <input id="taskSlots" type="number" placeholder="10" />
+                <input id="taskSlots" type="number" step="1" min="1" placeholder="10" />
               </div>
             </div>
 
             <div class="token-row">
               <button class="token-btn active" data-token="USDC">USDC</button>
               <button class="token-btn" data-token="EURC">EURC</button>
+            </div>
+
+            <div class="reserve-preview">
+              <span>Total reservado</span>
+              <b id="reservePreview">—</b>
             </div>
 
             <div class="field">
@@ -1156,7 +1197,7 @@
           <div class="task-list" id="taskList">
             <div class="task">
               <div class="task-title">Nenhuma tarefa aberta</div>
-              <p>Crie uma tarefa ou toque em “Demo”.</p>
+              <p>Crie uma tarefa com link, recompensa e prova exigida.</p>
             </div>
           </div>
         </section>
@@ -1166,23 +1207,25 @@
         <section class="card">
           <div class="card-head">
             <div>
-              <div class="kicker">Pool</div>
+              <div class="kicker">Reserva</div>
               <h2 class="title-blue">Recompensas</h2>
             </div>
-            <div class="tag">Teste</div>
+            <div class="tag">Arc Testnet</div>
           </div>
 
           <div class="compact-grid">
             <div class="metric">
               <small>USDC</small>
               <strong id="usdcPool">50.00</strong>
-              <span>saldo para tarefas</span>
+              <span>disponível para tarefas</span>
+              <em id="usdcReserved">0.00 reservado</em>
             </div>
 
             <div class="metric">
               <small>EURC</small>
               <strong class="blue" id="eurcPool">30.00</strong>
-              <span>saldo para tarefas</span>
+              <span>disponível para tarefas</span>
+              <em id="eurcReserved">0.00 reservado</em>
             </div>
           </div>
         </section>
@@ -1286,6 +1329,7 @@
       selectedId:null,
       currentReview:null,
       pools:{ USDC:50, EURC:30 },
+      reserved:{ USDC:0, EURC:0 },
       tasks:[],
       profile:{ done:0, earned:0, score:72 }
     };
@@ -1297,12 +1341,15 @@
     const demoBtn = $("demoBtn");
     const usdcPool = $("usdcPool");
     const eurcPool = $("eurcPool");
+    const usdcReserved = $("usdcReserved");
+    const eurcReserved = $("eurcReserved");
     const tokenTag = $("tokenTag");
     const taskTitle = $("taskTitle");
     const taskLink = $("taskLink");
     const taskReward = $("taskReward");
     const taskSlots = $("taskSlots");
     const taskProof = $("taskProof");
+    const reservePreview = $("reservePreview");
     const createBtn = $("createBtn");
     const taskList = $("taskList");
     const taskCount = $("taskCount");
@@ -1321,7 +1368,7 @@
     const toast = $("toast");
 
     function money(v){
-      return Number(v).toFixed(2);
+      return Number(v || 0).toFixed(2);
     }
 
     function id(){
@@ -1358,6 +1405,19 @@
         .replace(/\/$/, "");
     }
 
+    function available(token){
+      return Math.max(0, state.pools[token] - state.reserved[token]);
+    }
+
+    function recalcReserved(){
+      state.reserved.USDC = 0;
+      state.reserved.EURC = 0;
+
+      state.tasks.forEach(task => {
+        state.reserved[task.token] += task.reward * task.slots;
+      });
+    }
+
     function showToast(text){
       toast.textContent = text;
       toast.classList.add("show");
@@ -1370,20 +1430,35 @@
       rejectBtn.disabled = !active;
     }
 
+    function updateReservePreview(){
+      const reward = Number(taskReward.value);
+      const slots = Number(taskSlots.value);
+
+      if(!Number.isFinite(reward) || !Number.isFinite(slots) || reward <= 0 || slots <= 0){
+        reservePreview.textContent = "—";
+        return;
+      }
+
+      reservePreview.textContent = `${money(reward * slots)} ${state.token}`;
+    }
+
     function render(){
       walletText.textContent = state.connected ? "Conectada" : "Não conectada";
       walletBtn.textContent = state.connected ? "Desconectar" : "Conectar";
 
-      usdcPool.textContent = money(state.pools.USDC);
-      eurcPool.textContent = money(state.pools.EURC);
-      tokenTag.textContent = state.token;
+      usdcPool.textContent = money(available("USDC"));
+      eurcPool.textContent = money(available("EURC"));
+      usdcReserved.textContent = `${money(state.reserved.USDC)} reservado`;
+      eurcReserved.textContent = `${money(state.reserved.EURC)} reservado`;
 
+      tokenTag.textContent = state.token;
       taskCount.textContent = state.tasks.length;
 
       doneCount.textContent = state.profile.done;
       earnedValue.textContent = money(state.profile.earned);
       scoreValue.textContent = state.profile.score;
 
+      updateReservePreview();
       renderTasks();
     }
 
@@ -1392,7 +1467,7 @@
         taskList.innerHTML = `
           <div class="task">
             <div class="task-title">Nenhuma tarefa aberta</div>
-            <p>Crie uma tarefa ou toque em “Demo”.</p>
+            <p>Crie uma tarefa com link, recompensa e prova exigida.</p>
           </div>
         `;
         return;
@@ -1440,20 +1515,20 @@
         return;
       }
 
-      if(reward <= 0){
+      if(!Number.isFinite(reward) || reward <= 0){
         showToast("Recompensa inválida");
         return;
       }
 
-      if(slots <= 0){
-        showToast("Vagas inválidas");
+      if(!Number.isInteger(slots) || slots <= 0){
+        showToast("Vagas precisa ser inteiro");
         return;
       }
 
       const totalNeeded = reward * slots;
 
-      if(totalNeeded > state.pools[state.token]){
-        showToast("Pool insuficiente");
+      if(totalNeeded > available(state.token)){
+        showToast("Reserva insuficiente");
         return;
       }
 
@@ -1466,6 +1541,8 @@
         proof,
         token:state.token
       });
+
+      recalcReserved();
 
       taskTitle.value = "";
       taskLink.value = "";
@@ -1499,6 +1576,7 @@
         }
       ];
 
+      recalcReserved();
       showToast("Demo criada");
       render();
     }
@@ -1592,21 +1670,23 @@
 
       const task = state.currentReview.task;
 
-      if(state.pools[task.token] < task.reward){
-        showToast("Pool insuficiente");
+      if(state.reserved[task.token] < task.reward){
+        showToast("Reserva insuficiente");
         return;
       }
 
       state.pools[task.token] -= task.reward;
+      task.slots -= 1;
+
       state.profile.done += 1;
       state.profile.earned += task.reward;
       state.profile.score = Math.min(99, state.profile.score + 3);
 
-      task.slots -= 1;
-
       if(task.slots <= 0){
         state.tasks = state.tasks.filter(t => t.id !== task.id);
       }
+
+      recalcReserved();
 
       state.selectedId = null;
       selectedTask.value = "";
@@ -1651,6 +1731,9 @@
     approveBtn.addEventListener("click", approve);
     rejectBtn.addEventListener("click", reject);
 
+    taskReward.addEventListener("input", updateReservePreview);
+    taskSlots.addEventListener("input", updateReservePreview);
+
     document.querySelectorAll(".token-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         state.token = btn.dataset.token;
@@ -1678,4 +1761,4 @@
     render();
   </script>
 </body>
-              </html>
+  </html>
