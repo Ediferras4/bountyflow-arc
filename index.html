@@ -83,6 +83,10 @@
       background:none;
     }
 
+    button:disabled{
+      cursor:not-allowed;
+    }
+
     a{
       color:inherit;
       text-decoration:none;
@@ -277,7 +281,6 @@
 
     .btn:disabled{
       opacity:.45;
-      cursor:not-allowed;
     }
 
     .btn-primary{
@@ -314,7 +317,7 @@
       padding-bottom:18px;
     }
 
-    .flow-strip{
+    .mode-panel{
       border-radius:20px;
       background:
         linear-gradient(180deg, rgba(14,16,20,.96), rgba(8,9,11,.96));
@@ -323,41 +326,59 @@
         var(--shadow-soft),
         inset 0 1px 0 rgba(255,255,255,.035);
       padding:8px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:7px;
       margin-bottom:12px;
     }
 
-    .step{
-      min-height:35px;
-      border-radius:13px;
+    .mode-top{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:7px;
+    }
+
+    .mode-btn{
+      min-height:38px;
+      border-radius:14px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.96), rgba(237,240,242,.94));
       border:1px solid rgba(216,173,98,.14);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:5px;
-      font-size:9.5px;
-      line-height:1.1;
       color:#626872;
-      font-weight:780;
+      font-size:11px;
+      font-weight:830;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.74),
         0 5px 12px rgba(0,0,0,.08);
+      transition:.16s ease;
     }
 
-    .step.active{
+    .mode-btn.active{
+      color:#17120a;
+      border-color:rgba(216,173,98,.38);
       background:
-        radial-gradient(circle at 20% 10%, rgba(216,173,98,.16), transparent 34%),
-        linear-gradient(145deg, #f7f8f5, #ffffff);
-      color:#111318;
-      border-color:rgba(216,173,98,.34);
+        radial-gradient(circle at 24% 15%, rgba(255,255,255,.28), transparent 24%),
+        linear-gradient(145deg, #a8752e, var(--gold), #f0cf8a);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.82),
-        0 5px 14px rgba(0,0,0,.10);
+        0 10px 20px rgba(0,0,0,.15),
+        inset 0 1px 0 rgba(255,255,255,.22);
+    }
+
+    .mode-note{
+      margin-top:7px;
+      border-radius:13px;
+      padding:8px 10px;
+      color:rgba(247,248,245,.66);
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.045);
+      font-size:10.6px;
+      line-height:1.32;
+      font-weight:610;
+    }
+
+    .view{
+      display:block;
+    }
+
+    .view[hidden]{
+      display:none;
     }
 
     .workspace{
@@ -628,7 +649,8 @@
       font-weight:760;
     }
 
-    .task-list{
+    .task-list,
+    .proof-list{
       display:flex;
       flex-direction:column;
       gap:8px;
@@ -636,7 +658,8 @@
       z-index:1;
     }
 
-    .task{
+    .task,
+    .proof-card{
       border-radius:16px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.99), rgba(241,244,245,.95));
@@ -647,7 +670,8 @@
         0 5px 12px rgba(0,0,0,.035);
     }
 
-    .task-top{
+    .task-top,
+    .proof-top{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
@@ -655,7 +679,8 @@
       margin-bottom:8px;
     }
 
-    .task-title{
+    .task-title,
+    .proof-title{
       font-size:14px;
       line-height:1.22;
       color:#111318;
@@ -674,7 +699,8 @@
       border:1px solid rgba(216,173,98,.18);
     }
 
-    .task p{
+    .task p,
+    .proof-card p{
       font-size:11.5px;
       line-height:1.32;
       color:#626872;
@@ -696,11 +722,16 @@
       white-space:nowrap;
     }
 
-    .task-bottom{
+    .task-bottom,
+    .proof-actions{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:8px;
+    }
+
+    .proof-actions{
+      justify-content:flex-start;
     }
 
     .slots{
@@ -726,7 +757,8 @@
       box-shadow:0 7px 14px rgba(0,0,0,.15);
     }
 
-    .open-btn{
+    .open-btn,
+    .pay-btn{
       min-height:32px;
       padding:7px 11px;
       border-radius:11px;
@@ -737,6 +769,17 @@
         radial-gradient(circle at 24% 15%, rgba(255,255,255,.28), transparent 24%),
         linear-gradient(145deg, #a8752e, var(--gold), #f0cf8a);
       box-shadow:0 8px 16px rgba(0,0,0,.14);
+    }
+
+    .disabled-pill{
+      min-height:32px;
+      padding:7px 11px;
+      border-radius:11px;
+      font-size:10.5px;
+      font-weight:830;
+      color:#848b94;
+      background:rgba(255,255,255,.58);
+      border:1px solid rgba(16,18,22,.08);
     }
 
     .review{
@@ -1109,8 +1152,8 @@
               </div>
 
               <div class="mini-card">
-                <small>Rede</small>
-                <b>Arc Testnet</b>
+                <small>Modo</small>
+                <b id="modeText">Tester</b>
               </div>
             </div>
 
@@ -1125,190 +1168,233 @@
   </header>
 
   <main class="page">
-    <section class="flow-strip">
-      <div class="step active">Criar<br>tarefa</div>
-      <div class="step">Abrir<br>projeto</div>
-      <div class="step">Enviar<br>prova</div>
-      <div class="step">IA<br>revisa</div>
-    </section>
-
-    <section class="workspace">
-      <div class="col">
-        <section class="card">
-          <div class="card-head">
-            <div>
-              <div class="kicker">Criador</div>
-              <h2 class="title-black">Nova tarefa</h2>
-            </div>
-            <div class="tag" id="tokenTag">USDC</div>
-          </div>
-
-          <div class="form">
-            <div class="field">
-              <label>Título</label>
-              <input id="taskTitle" placeholder="Conectar carteira na StableFlow" />
-            </div>
-
-            <div class="field">
-              <label>Link do projeto</label>
-              <input id="taskLink" placeholder="https://seu-projeto.vercel.app" />
-            </div>
-
-            <div class="row">
-              <div class="field">
-                <label>Recompensa</label>
-                <input id="taskReward" type="number" step="0.01" min="0.01" placeholder="0.20" />
-              </div>
-
-              <div class="field">
-                <label>Vagas</label>
-                <input id="taskSlots" type="number" step="1" min="1" placeholder="10" />
-              </div>
-            </div>
-
-            <div class="token-row">
-              <button class="token-btn active" data-token="USDC">USDC</button>
-              <button class="token-btn" data-token="EURC">EURC</button>
-            </div>
-
-            <div class="reserve-preview">
-              <span>Total reservado</span>
-              <b id="reservePreview">—</b>
-            </div>
-
-            <div class="field">
-              <label>Prova exigida</label>
-              <textarea id="taskProof" placeholder="Informe carteira usada, navegador, aparelho, se conectou ou não, e se apareceu erro."></textarea>
-            </div>
-
-            <button class="btn btn-primary" id="createBtn">Criar tarefa</button>
-          </div>
-        </section>
-
-        <section class="card">
-          <div class="card-head">
-            <div>
-              <div class="kicker">Aberto</div>
-              <h2 class="title-blue">Quadro</h2>
-            </div>
-            <div class="tag"><span id="taskCount">0</span> tarefas</div>
-          </div>
-
-          <div class="task-list" id="taskList">
-            <div class="task">
-              <div class="task-title">Nenhuma tarefa aberta</div>
-              <p>Crie uma tarefa com link, recompensa e prova exigida.</p>
-            </div>
-          </div>
-        </section>
+    <section class="mode-panel">
+      <div class="mode-top">
+        <button class="mode-btn" data-mode="creator">Sou criador</button>
+        <button class="mode-btn active" data-mode="tester">Sou tester</button>
       </div>
 
-      <div class="col desktop-sticky">
-        <section class="card">
-          <div class="card-head">
-            <div>
-              <div class="kicker">Reserva</div>
-              <h2 class="title-blue">Recompensas</h2>
-            </div>
-            <div class="tag">Arc Testnet</div>
-          </div>
+      <div class="mode-note" id="modeNote">
+        Tester escolhe uma tarefa, abre o projeto, envia prova e aguarda aprovação.
+      </div>
+    </section>
 
-          <div class="compact-grid">
-            <div class="metric">
-              <small>USDC</small>
-              <strong id="usdcPool">50.00</strong>
-              <span>disponível para tarefas</span>
-              <em id="usdcReserved">0.00 reservado</em>
-            </div>
-
-            <div class="metric">
-              <small>EURC</small>
-              <strong class="blue" id="eurcPool">30.00</strong>
-              <span>disponível para tarefas</span>
-              <em id="eurcReserved">0.00 reservado</em>
-            </div>
-          </div>
-        </section>
-
-        <section class="card">
-          <div class="card-head">
-            <div>
-              <div class="kicker">Contribuidor</div>
-              <h2 class="title-black">Prova + IA</h2>
-            </div>
-            <div class="tag" id="selectedTag">Nada</div>
-          </div>
-
-          <div class="form">
-            <div class="field">
-              <label>Tarefa selecionada</label>
-              <input id="selectedTask" readonly placeholder="Escolha uma tarefa no quadro" />
+    <section class="view" id="creatorView" hidden>
+      <section class="workspace">
+        <div class="col">
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <div class="kicker">Criador</div>
+                <h2 class="title-black">Nova tarefa</h2>
+              </div>
+              <div class="tag" id="tokenTag">USDC</div>
             </div>
 
-            <div class="field">
-              <label>Feedback / prova</label>
-              <textarea id="proofText" placeholder="Ex: testei no Android com MetaMask. Conectou bem, mas encontrei bug no botão final."></textarea>
-            </div>
-
-            <button class="btn btn-light" id="reviewBtn">Analisar prova</button>
-
-            <div class="review">
-              <div class="review-line">
-                <span class="dot"></span>
-                <span id="reviewState">Aguardando prova</span>
+            <div class="form">
+              <div class="field">
+                <label>Título</label>
+                <input id="taskTitle" placeholder="Conectar carteira na StableFlow" />
               </div>
 
-              <div class="result">
-                <div class="result-box">
-                  <small>Qualidade</small>
-                  <b id="qualityText">Sem análise</b>
-                </div>
-
-                <div class="result-box">
-                  <small>Sugestão</small>
-                  <b id="suggestText">Envie uma prova</b>
-                </div>
+              <div class="field">
+                <label>Link do projeto</label>
+                <input id="taskLink" placeholder="https://seu-projeto.vercel.app" />
               </div>
 
               <div class="row">
-                <button class="btn btn-primary" id="approveBtn" disabled>Aprovar</button>
-                <button class="btn btn-dark" id="rejectBtn" disabled>Rejeitar</button>
+                <div class="field">
+                  <label>Recompensa</label>
+                  <input id="taskReward" type="number" step="0.01" min="0.01" placeholder="0.20" />
+                </div>
+
+                <div class="field">
+                  <label>Vagas</label>
+                  <input id="taskSlots" type="number" step="1" min="1" placeholder="10" />
+                </div>
+              </div>
+
+              <div class="token-row">
+                <button class="token-btn active" data-token="USDC">USDC</button>
+                <button class="token-btn" data-token="EURC">EURC</button>
+              </div>
+
+              <div class="reserve-preview">
+                <span>Total reservado</span>
+                <b id="reservePreview">—</b>
+              </div>
+
+              <div class="field">
+                <label>Prova exigida</label>
+                <textarea id="taskProof" placeholder="Informe carteira usada, navegador, aparelho, se conectou ou não, e se apareceu erro."></textarea>
+              </div>
+
+              <button class="btn btn-primary" id="createBtn">Criar tarefa</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <div class="kicker">Minhas</div>
+                <h2 class="title-blue">Tarefas</h2>
+              </div>
+              <div class="tag"><span id="myTaskCount">0</span> abertas</div>
+            </div>
+
+            <div class="task-list" id="myTaskList">
+              <div class="task">
+                <div class="task-title">Nenhuma tarefa criada</div>
+                <p>Conecte a carteira e crie uma tarefa com recompensa reservada.</p>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
-        <section class="card">
-          <div class="card-head">
-            <div>
-              <div class="kicker">Contribuidor</div>
-              <h2 class="title-blue">Perfil</h2>
-            </div>
-            <div class="tag">Reputação</div>
-          </div>
-
-          <div class="profile-strip">
-            <div class="profile-item">
-              <small>Feitas</small>
-              <b id="doneCount">0</b>
+        <div class="col desktop-sticky">
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <div class="kicker">Reserva</div>
+                <h2 class="title-blue">Recompensas</h2>
+              </div>
+              <div class="tag">Arc Testnet</div>
             </div>
 
-            <div class="profile-item">
-              <small>Ganho</small>
-              <b id="earnedValue">0.00</b>
+            <div class="compact-grid">
+              <div class="metric">
+                <small>USDC</small>
+                <strong id="usdcPool">50.00</strong>
+                <span>disponível para tarefas</span>
+                <em id="usdcReserved">0.00 reservado</em>
+              </div>
+
+              <div class="metric">
+                <small>EURC</small>
+                <strong class="blue" id="eurcPool">30.00</strong>
+                <span>disponível para tarefas</span>
+                <em id="eurcReserved">0.00 reservado</em>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <div class="kicker">Revisão</div>
+                <h2 class="title-black">Provas recebidas</h2>
+              </div>
+              <div class="tag" id="proofCountTag">0 provas</div>
             </div>
 
-            <div class="profile-item">
-              <small>Score</small>
-              <b id="scoreValue">72</b>
+            <div class="proof-list" id="creatorProofList">
+              <div class="proof-card">
+                <div class="proof-title">Nenhuma prova recebida</div>
+                <p>Quando um tester enviar prova para sua tarefa, ela aparece aqui.</p>
+              </div>
             </div>
-          </div>
-        </section>
-      </div>
+          </section>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="testerView">
+      <section class="workspace">
+        <div class="col">
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <div class="kicker">Aberto</div>
+                <h2 class="title-blue">Quadro</h2>
+              </div>
+              <div class="tag"><span id="taskCount">0</span> tarefas</div>
+            </div>
+
+            <div class="task-list" id="taskList">
+              <div class="task">
+                <div class="task-title">Nenhuma tarefa aberta</div>
+                <p>Entre como tester, escolha uma tarefa e envie uma prova útil.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="col desktop-sticky">
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <div class="kicker">Tester</div>
+                <h2 class="title-black">Enviar prova</h2>
+              </div>
+              <div class="tag" id="selectedTag">Nada</div>
+            </div>
+
+            <div class="form">
+              <div class="field">
+                <label>Tarefa selecionada</label>
+                <input id="selectedTask" readonly placeholder="Escolha uma tarefa no quadro" />
+              </div>
+
+              <div class="field">
+                <label>Feedback / prova</label>
+                <textarea id="proofText" placeholder="Ex: testei no Android com MetaMask. Conectou bem, mas encontrei bug no botão final."></textarea>
+              </div>
+
+              <button class="btn btn-light" id="submitProofBtn">Enviar prova</button>
+
+              <div class="review">
+                <div class="review-line">
+                  <span class="dot"></span>
+                  <span id="reviewState">Aguardando prova</span>
+                </div>
+
+                <div class="result">
+                  <div class="result-box">
+                    <small>IA / qualidade</small>
+                    <b id="qualityText">Sem análise</b>
+                  </div>
+
+                  <div class="result-box">
+                    <small>Sugestão</small>
+                    <b id="suggestText">Envie uma prova</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <div class="kicker">Contribuidor</div>
+                <h2 class="title-blue">Perfil</h2>
+              </div>
+              <div class="tag">Reputação</div>
+            </div>
+
+            <div class="profile-strip">
+              <div class="profile-item">
+                <small>Feitas</small>
+                <b id="doneCount">0</b>
+              </div>
+
+              <div class="profile-item">
+                <small>Ganho</small>
+                <b id="earnedValue">0.00</b>
+              </div>
+
+              <div class="profile-item">
+                <small>Score</small>
+                <b id="scoreValue">72</b>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
     </section>
 
     <div class="footer-note">
-      BountyFlow: tarefa → abrir projeto → prova → revisão com IA → recompensa.
+      BountyFlow: criador cria → tester prova → criador aprova → recompensa liberada.
     </div>
   </main>
 
@@ -1323,15 +1409,21 @@
   <div class="toast" id="toast">ok</div>
 
   <script>
+    const CREATOR_DEMO = "0xCReaTor0000000000000000000000000000000001";
+    const TESTER_DEMO = "0xTeSTer0000000000000000000000000000000002";
+
     const state = {
       connected:false,
+      wallet:null,
+      mode:"tester",
       token:"USDC",
       selectedId:null,
       currentReview:null,
       pools:{ USDC:50, EURC:30 },
       reserved:{ USDC:0, EURC:0 },
       tasks:[],
-      profile:{ done:0, earned:0, score:72 }
+      proofs:[],
+      profiles:{}
     };
 
     const $ = (id) => document.getElementById(id);
@@ -1339,11 +1431,17 @@
     const walletText = $("walletText");
     const walletBtn = $("walletBtn");
     const demoBtn = $("demoBtn");
+    const modeText = $("modeText");
+    const modeNote = $("modeNote");
+    const creatorView = $("creatorView");
+    const testerView = $("testerView");
+
     const usdcPool = $("usdcPool");
     const eurcPool = $("eurcPool");
     const usdcReserved = $("usdcReserved");
     const eurcReserved = $("eurcReserved");
     const tokenTag = $("tokenTag");
+
     const taskTitle = $("taskTitle");
     const taskLink = $("taskLink");
     const taskReward = $("taskReward");
@@ -1351,17 +1449,23 @@
     const taskProof = $("taskProof");
     const reservePreview = $("reservePreview");
     const createBtn = $("createBtn");
+
     const taskList = $("taskList");
     const taskCount = $("taskCount");
+    const myTaskList = $("myTaskList");
+    const myTaskCount = $("myTaskCount");
+
     const selectedTag = $("selectedTag");
     const selectedTask = $("selectedTask");
     const proofText = $("proofText");
-    const reviewBtn = $("reviewBtn");
+    const submitProofBtn = $("submitProofBtn");
     const reviewState = $("reviewState");
     const qualityText = $("qualityText");
     const suggestText = $("suggestText");
-    const approveBtn = $("approveBtn");
-    const rejectBtn = $("rejectBtn");
+
+    const creatorProofList = $("creatorProofList");
+    const proofCountTag = $("proofCountTag");
+
     const doneCount = $("doneCount");
     const earnedValue = $("earnedValue");
     const scoreValue = $("scoreValue");
@@ -1373,6 +1477,29 @@
 
     function id(){
       return Math.random().toString(36).slice(2,9);
+    }
+
+    function shortWallet(address){
+      if(!address) return "Não conectada";
+      return address.slice(0,6) + "..." + address.slice(-4);
+    }
+
+    function makeWallet(){
+      return "0x" + Math.random().toString(16).slice(2,10).padEnd(8,"0") + Math.random().toString(16).slice(2,34).padEnd(32,"0");
+    }
+
+    function ensureProfile(wallet){
+      if(!wallet) return { done:0, earned:0, score:72 };
+
+      if(!state.profiles[wallet]){
+        state.profiles[wallet] = {
+          done:0,
+          earned:0,
+          score:72
+        };
+      }
+
+      return state.profiles[wallet];
     }
 
     function escapeHTML(text){
@@ -1414,7 +1541,9 @@
       state.reserved.EURC = 0;
 
       state.tasks.forEach(task => {
-        state.reserved[task.token] += task.reward * task.slots;
+        if(task.slots > 0){
+          state.reserved[task.token] += task.reward * task.slots;
+        }
       });
     }
 
@@ -1422,12 +1551,27 @@
       toast.textContent = text;
       toast.classList.add("show");
       clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1600);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1700);
     }
 
-    function setReviewButtons(active){
-      approveBtn.disabled = !active;
-      rejectBtn.disabled = !active;
+    function setMode(mode){
+      state.mode = mode;
+
+      document.querySelectorAll(".mode-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.mode === mode);
+      });
+
+      creatorView.hidden = mode !== "creator";
+      testerView.hidden = mode !== "tester";
+
+      modeText.textContent = mode === "creator" ? "Criador" : "Tester";
+
+      modeNote.textContent = mode === "creator"
+        ? "Criador cria tarefas, reserva recompensa e aprova provas recebidas."
+        : "Tester escolhe uma tarefa, abre o projeto, envia prova e aguarda aprovação.";
+
+      resetProofForm();
+      render();
     }
 
     function updateReservePreview(){
@@ -1442,9 +1586,69 @@
       reservePreview.textContent = `${money(reward * slots)} ${state.token}`;
     }
 
+    function analyzeText(raw){
+      const text = String(raw || "").trim().toLowerCase();
+
+      const words = [
+        "bug",
+        "botão",
+        "tela",
+        "carteira",
+        "android",
+        "iphone",
+        "desktop",
+        "navegador",
+        "funcionou",
+        "erro",
+        "pay",
+        "qr",
+        "conectou",
+        "layout",
+        "metamask",
+        "rabby",
+        "okx"
+      ];
+
+      let hits = 0;
+
+      words.forEach(w => {
+        if(text.includes(w)) hits++;
+      });
+
+      if(text.length > 120 && hits >= 5){
+        return {
+          quality:"Forte",
+          suggestion:"Boa prova. Criador pode aprovar."
+        };
+      }
+
+      if(text.length > 60 && hits >= 2){
+        return {
+          quality:"Boa",
+          suggestion:"Pode aprovar, se fizer sentido."
+        };
+      }
+
+      return {
+        quality:"Fraca",
+        suggestion:"Pedir mais detalhes."
+      };
+    }
+
+    function resetProofForm(){
+      state.selectedId = null;
+      selectedTask.value = "";
+      selectedTag.textContent = "Nada";
+      proofText.value = "";
+      reviewState.textContent = "Aguardando prova";
+      qualityText.textContent = "Sem análise";
+      suggestText.textContent = "Envie uma prova";
+    }
+
     function render(){
-      walletText.textContent = state.connected ? "Conectada" : "Não conectada";
+      walletText.textContent = state.connected ? shortWallet(state.wallet) : "Não conectada";
       walletBtn.textContent = state.connected ? "Desconectar" : "Conectar";
+      modeText.textContent = state.mode === "creator" ? "Criador" : "Tester";
 
       usdcPool.textContent = money(available("USDC"));
       eurcPool.textContent = money(available("EURC"));
@@ -1452,28 +1656,89 @@
       eurcReserved.textContent = `${money(state.reserved.EURC)} reservado`;
 
       tokenTag.textContent = state.token;
-      taskCount.textContent = state.tasks.length;
 
-      doneCount.textContent = state.profile.done;
-      earnedValue.textContent = money(state.profile.earned);
-      scoreValue.textContent = state.profile.score;
+      const openTasks = state.tasks.filter(task => task.slots > 0);
+      const myTasks = state.connected
+        ? state.tasks.filter(task => task.creator === state.wallet && task.slots > 0)
+        : [];
+
+      taskCount.textContent = openTasks.length;
+      myTaskCount.textContent = myTasks.length;
+
+      const profile = ensureProfile(state.wallet);
+      doneCount.textContent = profile.done;
+      earnedValue.textContent = money(profile.earned);
+      scoreValue.textContent = profile.score;
 
       updateReservePreview();
-      renderTasks();
+      renderPublicTasks(openTasks);
+      renderMyTasks(myTasks);
+      renderCreatorProofs();
     }
 
-    function renderTasks(){
-      if(!state.tasks.length){
+    function renderPublicTasks(tasks){
+      if(!tasks.length){
         taskList.innerHTML = `
           <div class="task">
             <div class="task-title">Nenhuma tarefa aberta</div>
+            <p>Entre como tester, escolha uma tarefa e envie uma prova útil.</p>
+          </div>
+        `;
+        return;
+      }
+
+      taskList.innerHTML = tasks.map(task => {
+        const isOwn = state.connected && task.creator === state.wallet;
+
+        return `
+          <div class="task">
+            <div class="task-top">
+              <div class="task-title">${escapeHTML(task.title)}</div>
+              <div class="reward">${money(task.reward)} ${task.token}</div>
+            </div>
+
+            <div class="task-link">${escapeHTML(shortUrl(task.link))}</div>
+
+            <p>${escapeHTML(task.proof)}</p>
+
+            <div class="task-bottom">
+              <div class="slots">${task.slots} vagas</div>
+              <div style="display:flex;gap:6px;">
+                <button class="open-btn" data-open="${task.id}">Abrir projeto</button>
+                ${
+                  isOwn
+                    ? `<span class="disabled-pill">Sua tarefa</span>`
+                    : `<button class="small-btn" data-select="${task.id}">Usar</button>`
+                }
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderMyTasks(tasks){
+      if(!state.connected){
+        myTaskList.innerHTML = `
+          <div class="task">
+            <div class="task-title">Conecte a carteira</div>
+            <p>Para criar e acompanhar tarefas, conecte como criador.</p>
+          </div>
+        `;
+        return;
+      }
+
+      if(!tasks.length){
+        myTaskList.innerHTML = `
+          <div class="task">
+            <div class="task-title">Nenhuma tarefa criada</div>
             <p>Crie uma tarefa com link, recompensa e prova exigida.</p>
           </div>
         `;
         return;
       }
 
-      taskList.innerHTML = state.tasks.map(task => `
+      myTaskList.innerHTML = tasks.map(task => `
         <div class="task">
           <div class="task-top">
             <div class="task-title">${escapeHTML(task.title)}</div>
@@ -1486,24 +1751,88 @@
 
           <div class="task-bottom">
             <div class="slots">${task.slots} vagas</div>
-            <div style="display:flex;gap:6px;">
-              <button class="open-btn" data-open="${task.id}">Abrir projeto</button>
-              <button class="small-btn" data-select="${task.id}">Usar</button>
-            </div>
+            <div class="slots">${money(task.reward * task.slots)} ${task.token} reservado</div>
           </div>
         </div>
       `).join("");
     }
 
-    function resetReview(){
-      state.currentReview = null;
-      reviewState.textContent = "Aguardando prova";
-      qualityText.textContent = "Sem análise";
-      suggestText.textContent = "Envie uma prova";
-      setReviewButtons(false);
+    function renderCreatorProofs(){
+      if(!state.connected){
+        proofCountTag.textContent = "0 provas";
+        creatorProofList.innerHTML = `
+          <div class="proof-card">
+            <div class="proof-title">Conecte a carteira</div>
+            <p>As provas aparecem para o criador da tarefa conectada.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const myTaskIds = state.tasks
+        .filter(task => task.creator === state.wallet)
+        .map(task => task.id);
+
+      const proofs = state.proofs.filter(proof => {
+        return myTaskIds.includes(proof.taskId) && proof.status === "pending";
+      });
+
+      proofCountTag.textContent = `${proofs.length} provas`;
+
+      if(!proofs.length){
+        creatorProofList.innerHTML = `
+          <div class="proof-card">
+            <div class="proof-title">Nenhuma prova recebida</div>
+            <p>Quando um tester enviar prova para sua tarefa, ela aparece aqui.</p>
+          </div>
+        `;
+        return;
+      }
+
+      creatorProofList.innerHTML = proofs.map(proof => {
+        const task = state.tasks.find(item => item.id === proof.taskId);
+
+        return `
+          <div class="proof-card">
+            <div class="proof-top">
+              <div class="proof-title">${escapeHTML(task ? task.title : "Tarefa")}</div>
+              <div class="reward">${task ? money(task.reward) + " " + task.token : ""}</div>
+            </div>
+
+            <p>${escapeHTML(proof.text)}</p>
+
+            <div class="result">
+              <div class="result-box">
+                <small>Tester</small>
+                <b>${shortWallet(proof.tester)}</b>
+              </div>
+
+              <div class="result-box">
+                <small>IA / qualidade</small>
+                <b>${escapeHTML(proof.quality)} — ${escapeHTML(proof.suggestion)}</b>
+              </div>
+            </div>
+
+            <div class="proof-actions" style="margin-top:8px;">
+              <button class="pay-btn" data-approve="${proof.id}">Aprovar e pagar</button>
+              <button class="small-btn" data-reject="${proof.id}">Rejeitar</button>
+            </div>
+          </div>
+        `;
+      }).join("");
     }
 
     function createTask(){
+      if(!state.connected){
+        showToast("Conecte como criador");
+        return;
+      }
+
+      if(state.mode !== "creator"){
+        showToast("Entre no modo Criador");
+        return;
+      }
+
       const title = taskTitle.value.trim();
       const link = cleanUrl(taskLink.value);
       const reward = Number(taskReward.value);
@@ -1539,7 +1868,9 @@
         reward,
         slots,
         proof,
-        token:state.token
+        token:state.token,
+        creator:state.wallet,
+        createdAt:Date.now()
       });
 
       recalcReserved();
@@ -1563,7 +1894,9 @@
           reward:0.20,
           slots:10,
           proof:"Abra a StableFlow, tente conectar sua carteira na Arc Testnet e envie carteira usada, navegador, aparelho e se conectou.",
-          token:"USDC"
+          token:"USDC",
+          creator:CREATOR_DEMO,
+          createdAt:Date.now()
         },
         {
           id:id(),
@@ -1572,9 +1905,42 @@
           reward:0.15,
           slots:8,
           proof:"Abra a tela Get Paid e diga se o pedido de pagamento ficou claro para um novo usuário.",
-          token:"EURC"
+          token:"EURC",
+          creator:CREATOR_DEMO,
+          createdAt:Date.now()
         }
       ];
+
+      state.proofs = [];
+
+      if(state.connected && state.mode === "creator"){
+        const ownTask = {
+          id:id(),
+          title:"Revisar experiência mobile",
+          link:"https://bountyflow-arc.vercel.app",
+          reward:0.10,
+          slots:5,
+          proof:"Tester deve abrir no celular, navegar pela página e enviar opinião clara sobre layout, scroll e botões.",
+          token:"USDC",
+          creator:state.wallet,
+          createdAt:Date.now()
+        };
+
+        state.tasks.unshift(ownTask);
+
+        const analysis = analyzeText("Testei no Android com MetaMask. A página abriu bem, o scroll funcionou e os botões ficaram claros. Não encontrei erro grave, mas o topo poderia ser menor.");
+
+        state.proofs.push({
+          id:id(),
+          taskId:ownTask.id,
+          tester:TESTER_DEMO,
+          text:"Testei no Android com MetaMask. A página abriu bem, o scroll funcionou e os botões ficaram claros. Não encontrei erro grave, mas o topo poderia ser menor.",
+          quality:analysis.quality,
+          suggestion:analysis.suggestion,
+          status:"pending",
+          createdAt:Date.now()
+        });
+      }
 
       recalcReserved();
       showToast("Demo criada");
@@ -1582,31 +1948,78 @@
     }
 
     function selectTask(taskId){
+      if(!state.connected){
+        showToast("Conecte como tester");
+        return;
+      }
+
+      if(state.mode !== "tester"){
+        showToast("Entre no modo Tester");
+        return;
+      }
+
       const task = state.tasks.find(t => t.id === taskId);
-      if(!task) return;
+
+      if(!task){
+        return;
+      }
+
+      if(task.creator === state.wallet){
+        showToast("Você não pode fazer sua própria tarefa");
+        return;
+      }
+
+      const alreadySent = state.proofs.some(proof => {
+        return proof.taskId === taskId && proof.tester === state.wallet && proof.status !== "rejected";
+      });
+
+      if(alreadySent){
+        showToast("Você já enviou prova nessa tarefa");
+        return;
+      }
 
       state.selectedId = taskId;
       selectedTask.value = task.title;
       selectedTag.textContent = `${money(task.reward)} ${task.token}`;
       proofText.value = "";
-      resetReview();
+      reviewState.textContent = "Tarefa selecionada";
+      qualityText.textContent = "Aguardando envio";
+      suggestText.textContent = "Abra o projeto e envie sua prova.";
 
       showToast("Tarefa selecionada");
     }
 
     function openProject(taskId){
       const task = state.tasks.find(t => t.id === taskId);
-      if(!task) return;
+
+      if(!task){
+        return;
+      }
 
       window.open(task.link, "_blank", "noopener,noreferrer");
     }
 
-    function analyzeProof(){
+    function submitProof(){
+      if(!state.connected){
+        showToast("Conecte como tester");
+        return;
+      }
+
+      if(state.mode !== "tester"){
+        showToast("Entre no modo Tester");
+        return;
+      }
+
       const task = state.tasks.find(t => t.id === state.selectedId);
-      const text = proofText.value.trim().toLowerCase();
+      const text = proofText.value.trim();
 
       if(!task){
         showToast("Escolha uma tarefa");
+        return;
+      }
+
+      if(task.creator === state.wallet){
+        showToast("Você não pode fazer sua própria tarefa");
         return;
       }
 
@@ -1615,130 +2028,144 @@
         return;
       }
 
-      const words = [
-        "bug",
-        "botão",
-        "tela",
-        "carteira",
-        "android",
-        "iphone",
-        "desktop",
-        "navegador",
-        "funcionou",
-        "erro",
-        "pay",
-        "qr",
-        "conectou",
-        "layout",
-        "metamask",
-        "rabby",
-        "okx"
-      ];
-
-      let hits = 0;
-
-      words.forEach(w => {
-        if(text.includes(w)) hits++;
+      const alreadySent = state.proofs.some(proof => {
+        return proof.taskId === task.id && proof.tester === state.wallet && proof.status !== "rejected";
       });
 
-      let quality = "Fraca";
-      let suggestion = "Pedir mais detalhes";
-
-      if(text.length > 120 && hits >= 5){
-        quality = "Forte";
-        suggestion = "Aprovar";
-      }else if(text.length > 60 && hits >= 2){
-        quality = "Boa";
-        suggestion = "Pode aprovar";
+      if(alreadySent){
+        showToast("Prova já enviada");
+        return;
       }
 
-      state.currentReview = { task };
+      const analysis = analyzeText(text);
 
-      reviewState.textContent = "Análise concluída";
-      qualityText.textContent = quality;
-      suggestText.textContent = suggestion;
-      setReviewButtons(true);
+      state.proofs.push({
+        id:id(),
+        taskId:task.id,
+        tester:state.wallet,
+        text,
+        quality:analysis.quality,
+        suggestion:analysis.suggestion,
+        status:"pending",
+        createdAt:Date.now()
+      });
 
-      showToast("IA analisou");
+      reviewState.textContent = "Prova enviada";
+      qualityText.textContent = analysis.quality;
+      suggestText.textContent = analysis.suggestion;
+
+      proofText.value = "";
+      showToast("Prova enviada para o criador");
+      render();
     }
 
-    function approve(){
-      if(!state.currentReview){
-        showToast("Nada para aprovar");
+    function approveProof(proofId){
+      const proof = state.proofs.find(item => item.id === proofId);
+
+      if(!proof || proof.status !== "pending"){
         return;
       }
 
-      const task = state.currentReview.task;
+      const task = state.tasks.find(item => item.id === proof.taskId);
 
-      if(state.reserved[task.token] < task.reward){
-        showToast("Reserva insuficiente");
+      if(!task){
         return;
       }
 
-      state.pools[task.token] -= task.reward;
-      task.slots -= 1;
-
-      state.profile.done += 1;
-      state.profile.earned += task.reward;
-      state.profile.score = Math.min(99, state.profile.score + 3);
+      if(task.creator !== state.wallet){
+        showToast("Só o criador aprova");
+        return;
+      }
 
       if(task.slots <= 0){
-        state.tasks = state.tasks.filter(t => t.id !== task.id);
+        showToast("Sem vagas restantes");
+        return;
+      }
+
+      if(state.pools[task.token] < task.reward){
+        showToast("Pool insuficiente");
+        return;
+      }
+
+      proof.status = "approved";
+      task.slots -= 1;
+      state.pools[task.token] -= task.reward;
+
+      const profile = ensureProfile(proof.tester);
+      profile.done += 1;
+      profile.earned += task.reward;
+      profile.score = Math.min(99, profile.score + 3);
+
+      if(task.slots <= 0){
+        task.closed = true;
       }
 
       recalcReserved();
-
-      state.selectedId = null;
-      selectedTask.value = "";
-      selectedTag.textContent = "Nada";
-      proofText.value = "";
-      reviewState.textContent = "Pagamento aprovado";
-      qualityText.textContent = "Aguardando";
-      suggestText.textContent = "Escolha nova tarefa";
-      setReviewButtons(false);
-      state.currentReview = null;
-
       showToast("Aprovado e pago");
       render();
     }
 
-    function reject(){
-      if(!state.currentReview){
-        showToast("Nada para rejeitar");
+    function rejectProof(proofId){
+      const proof = state.proofs.find(item => item.id === proofId);
+
+      if(!proof || proof.status !== "pending"){
         return;
       }
 
-      state.profile.score = Math.max(40, state.profile.score - 1);
-      state.currentReview = null;
-      reviewState.textContent = "Prova rejeitada";
-      qualityText.textContent = "Aguardando";
-      suggestText.textContent = "Envie outra prova";
-      setReviewButtons(false);
+      const task = state.tasks.find(item => item.id === proof.taskId);
 
-      showToast("Rejeitado");
+      if(!task || task.creator !== state.wallet){
+        showToast("Só o criador rejeita");
+        return;
+      }
+
+      proof.status = "rejected";
+
+      const profile = ensureProfile(proof.tester);
+      profile.score = Math.max(40, profile.score - 1);
+
+      showToast("Prova rejeitada");
       render();
     }
 
     walletBtn.addEventListener("click", () => {
-      state.connected = !state.connected;
-      showToast(state.connected ? "Carteira conectada" : "Carteira desconectada");
+      if(state.connected){
+        state.connected = false;
+        state.wallet = null;
+        resetProofForm();
+        showToast("Carteira desconectada");
+        render();
+        return;
+      }
+
+      state.connected = true;
+      state.wallet = makeWallet();
+      ensureProfile(state.wallet);
+
+      showToast("Carteira conectada");
       render();
     });
 
     demoBtn.addEventListener("click", seedDemo);
     createBtn.addEventListener("click", createTask);
-    reviewBtn.addEventListener("click", analyzeProof);
-    approveBtn.addEventListener("click", approve);
-    rejectBtn.addEventListener("click", reject);
+    submitProofBtn.addEventListener("click", submitProof);
 
     taskReward.addEventListener("input", updateReservePreview);
     taskSlots.addEventListener("input", updateReservePreview);
 
+    document.querySelectorAll(".mode-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        setMode(btn.dataset.mode);
+      });
+    });
+
     document.querySelectorAll(".token-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         state.token = btn.dataset.token;
+
         document.querySelectorAll(".token-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
+
         render();
       });
     });
@@ -1757,7 +2184,22 @@
       }
     });
 
-    setReviewButtons(false);
+    creatorProofList.addEventListener("click", (e) => {
+      const approveBtn = e.target.closest("[data-approve]");
+      const rejectBtn = e.target.closest("[data-reject]");
+
+      if(approveBtn){
+        approveProof(approveBtn.dataset.approve);
+        return;
+      }
+
+      if(rejectBtn){
+        rejectProof(rejectBtn.dataset.reject);
+      }
+    });
+
+    setMode("tester");
+    recalcReserved();
     render();
   </script>
 </body>
