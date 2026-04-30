@@ -22,7 +22,6 @@
       --bg-3:#000;
 
       --ink:#101113;
-      --ink-2:#17191d;
       --soft:#60666f;
       --muted:#969da7;
 
@@ -37,19 +36,13 @@
       --gold:#c99c54;
       --gold-2:#ead099;
       --gold-3:#7a5522;
-      --gold-4:#a87532;
-      --gold-soft:rgba(201,156,84,.14);
 
       --green:#2eb872;
       --green-2:#e0f8ea;
       --green-3:#0f6b3e;
 
-      --blue:#102e67;
-      --blue-soft:#eaf1ff;
-
-      --line:rgba(18,18,18,.105);
-      --line-gold:rgba(201,156,84,.32);
-      --line-gold-soft:rgba(201,156,84,.15);
+      --red:#9d3a32;
+      --blue:#13284f;
 
       --shadow:0 16px 34px rgba(0,0,0,.23);
       --shadow-soft:0 9px 22px rgba(0,0,0,.17);
@@ -327,21 +320,6 @@
       filter:saturate(1.03) brightness(.985);
     }
 
-    .btn:focus-visible,
-    .mode-btn:focus-visible,
-    .token-btn:focus-visible,
-    .tag-btn:focus-visible,
-    .small-btn:focus-visible,
-    .open-btn:focus-visible,
-    .pay-btn:focus-visible,
-    .wallet-option:focus-visible,
-    .sheet-close:focus-visible{
-      outline:none;
-      box-shadow:
-        0 0 0 3px rgba(201,156,84,.20),
-        0 9px 20px rgba(0,0,0,.18);
-    }
-
     .btn:disabled{
       opacity:.44;
       filter:grayscale(.15);
@@ -539,6 +517,20 @@
         inset 0 1px 0 rgba(255,255,255,.76);
     }
 
+    .tag-warning{
+      color:#6f542a;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.99), rgba(246,239,223,.94));
+      border-color:rgba(201,156,84,.24);
+    }
+
+    .tag-good{
+      color:#0f6b3e;
+      background:
+        linear-gradient(180deg, #f8fff9, #e7f8ed);
+      border-color:rgba(46,184,114,.24);
+    }
+
     .tag-btn{
       min-height:31px;
       border-radius:999px;
@@ -652,8 +644,8 @@
       border-radius:14px;
       padding:9px 11px;
       background:
-        linear-gradient(180deg, rgba(201,156,84,.115), rgba(255,255,255,.44));
-      border:1px solid rgba(201,156,84,.18);
+        linear-gradient(180deg, rgba(201,156,84,.095), rgba(255,255,255,.44));
+      border:1px solid rgba(201,156,84,.16);
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -674,6 +666,19 @@
       font-weight:850;
       color:#111318;
       text-align:right;
+    }
+
+    .notice-light{
+      border-radius:15px;
+      padding:10px 11px;
+      color:#5f6670;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.99), rgba(241,244,245,.95));
+      border:1px solid rgba(16,18,22,.08);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.78);
+      font-size:11px;
+      line-height:1.38;
+      font-weight:620;
     }
 
     .compact-grid{
@@ -706,12 +711,16 @@
 
     .metric strong{
       display:block;
-      font-size:23px;
+      font-size:22px;
       line-height:1;
       letter-spacing:-.04em;
       font-weight:850;
       color:#111318;
       margin-bottom:5px;
+      max-width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
     .metric strong.blue{
@@ -764,11 +773,11 @@
 
     .reward-card.status-approved{
       background:
-        radial-gradient(circle at 100% 0%, rgba(46,184,114,.16), transparent 30%),
+        radial-gradient(circle at 100% 0%, rgba(46,184,114,.13), transparent 30%),
         linear-gradient(180deg, #f7fff9, var(--green-2));
-      border:1px solid rgba(46,184,114,.32);
+      border:1px solid rgba(46,184,114,.28);
       box-shadow:
-        0 8px 18px rgba(46,184,114,.12),
+        0 8px 18px rgba(46,184,114,.10),
         inset 0 1px 0 rgba(255,255,255,.82);
     }
 
@@ -816,7 +825,7 @@
       border:1px solid rgba(201,156,84,.17);
     }
 
-    .paid-badge{
+    .approved-badge{
       border-radius:11px;
       padding:6px 8px;
       background:rgba(46,184,114,.16);
@@ -937,7 +946,7 @@
     }
 
     .pay-btn{
-      min-width:112px;
+      min-width:88px;
     }
 
     .disabled-pill{
@@ -1465,7 +1474,7 @@
 
             <div class="brand-copy">
               <h1>Bounty<span>Flow</span></h1>
-              <p>Tarefas verificadas. Provas revisadas. Recompensas liberadas.</p>
+              <p>Microtarefas verificadas para builders e testers na Arc.</p>
             </div>
           </div>
 
@@ -1477,14 +1486,14 @@
               </div>
 
               <div class="mini-card">
-                <small>Modo</small>
-                <b id="modeText">Tester</b>
+                <small>Rede</small>
+                <b id="networkText">Arc Testnet</b>
               </div>
             </div>
 
             <div class="hero-actions">
               <button class="btn btn-primary" id="walletBtn">Conectar</button>
-              <button class="btn btn-light" id="demoBtn">Demo</button>
+              <button class="btn btn-light" id="clearBtn">Limpar local</button>
             </div>
           </div>
         </div>
@@ -1500,7 +1509,7 @@
       </div>
 
       <div class="mode-note" id="modeNote">
-        Tester escolhe uma tarefa, abre o projeto, envia prova e aguarda aprovação.
+        Tester escolhe uma tarefa, abre o projeto, envia prova e acompanha em Minhas provas.
       </div>
     </section>
 
@@ -1517,6 +1526,10 @@
             </div>
 
             <div class="form">
+              <div class="notice-light">
+                Fase 1 real: carteira e saldos reais. Tarefas e provas ainda ficam salvas localmente no navegador até contrato/backend serem integrados.
+              </div>
+
               <div class="field">
                 <label>Título</label>
                 <input id="taskTitle" placeholder="Conectar carteira na StableFlow" />
@@ -1545,7 +1558,7 @@
               </div>
 
               <div class="reserve-preview">
-                <span>Total reservado</span>
+                <span>Total previsto</span>
                 <b id="reservePreview">—</b>
               </div>
 
@@ -1554,7 +1567,7 @@
                 <textarea id="taskProof" placeholder="Informe carteira usada, navegador, aparelho, se conectou ou não, e se apareceu erro."></textarea>
               </div>
 
-              <button class="btn btn-primary" id="createBtn">Criar tarefa</button>
+              <button class="btn btn-primary" id="createBtn">Criar tarefa local</button>
             </div>
           </section>
 
@@ -1570,7 +1583,7 @@
             <div class="task-list" id="myTaskList">
               <div class="task">
                 <div class="task-title">Nenhuma tarefa criada</div>
-                <p>Conecte a carteira e crie uma tarefa com recompensa reservada.</p>
+                <p>Conecte a carteira e crie uma tarefa local para testar o fluxo.</p>
               </div>
             </div>
           </section>
@@ -1580,25 +1593,25 @@
           <section class="card">
             <div class="card-head">
               <div>
-                <div class="kicker">Reserva</div>
-                <h2 class="title-blue">Recompensas</h2>
+                <div class="kicker">Carteira</div>
+                <h2 class="title-blue">Status real</h2>
               </div>
-              <div class="tag">Arc Testnet</div>
+              <button class="tag-btn" id="refreshBalancesBtn">Atualizar</button>
             </div>
 
             <div class="compact-grid">
               <div class="metric">
                 <small>USDC</small>
-                <strong id="usdcPool">50.00</strong>
-                <span>disponível para tarefas</span>
-                <em id="usdcReserved">0.00 reservado</em>
+                <strong id="usdcStatus">—</strong>
+                <span>saldo real na carteira</span>
+                <em id="usdcLocal">0.00 previsto local</em>
               </div>
 
               <div class="metric">
                 <small>EURC</small>
-                <strong class="blue" id="eurcPool">30.00</strong>
-                <span>disponível para tarefas</span>
-                <em id="eurcReserved">0.00 reservado</em>
+                <strong class="blue" id="eurcStatus">—</strong>
+                <span>saldo real na carteira</span>
+                <em id="eurcLocal">0.00 previsto local</em>
               </div>
             </div>
           </section>
@@ -1638,7 +1651,7 @@
             <div class="task-list" id="taskList">
               <div class="task">
                 <div class="task-title">Nenhuma tarefa aberta</div>
-                <p>Entre como tester, escolha uma tarefa e envie uma prova útil.</p>
+                <p>Quando um criador publicar uma tarefa neste navegador, ela aparece aqui para teste local.</p>
               </div>
             </div>
           </section>
@@ -1665,7 +1678,7 @@
                 <textarea id="proofText" placeholder="Ex: testei no Android com MetaMask. Conectou bem, mas encontrei bug no botão final."></textarea>
               </div>
 
-              <button class="btn btn-light" id="submitProofBtn">Enviar prova</button>
+              <button class="btn btn-light" id="submitProofBtn">Enviar prova local</button>
 
               <div class="review">
                 <div class="review-line">
@@ -1675,7 +1688,7 @@
 
                 <div class="result">
                   <div class="result-box">
-                    <small>IA / qualidade</small>
+                    <small>Pré-análise local</small>
                     <b id="qualityText">Sem análise</b>
                   </div>
 
@@ -1709,19 +1722,19 @@
             <div class="card-head">
               <div>
                 <div class="kicker">Contribuidor</div>
-                <h2 class="title-blue">Perfil</h2>
+                <h2 class="title-blue">Perfil local</h2>
               </div>
-              <div class="tag">Reputação</div>
+              <div class="tag">Teste</div>
             </div>
 
             <div class="profile-strip">
               <div class="profile-item">
-                <small>Feitas</small>
+                <small>Aprovadas</small>
                 <b id="doneCount">0</b>
               </div>
 
               <div class="profile-item">
-                <small>Ganho</small>
+                <small>Previsto</small>
                 <b id="earnedValue">0.00</b>
               </div>
 
@@ -1736,15 +1749,15 @@
     </section>
 
     <div class="footer-note">
-      BountyFlow: criador cria → tester prova → criador aprova → recompensa liberada.
+      BountyFlow: criador cria → tester prova → criador aprova → pagamento real entra na próxima fase.
     </div>
   </main>
 
   <footer class="bottombar">
     <div class="bottombar-inner">
-      <a href="#" class="social-link">GitHub</a>
-      <a href="#" class="social-link">X</a>
-      <a href="#" class="social-link">Discord</a>
+      <a href="https://github.com/Ediferras4/bountyflow-arc" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+      <a href="#" class="social-link" data-disabled-link="X ainda não configurado">X</a>
+      <a href="#" class="social-link" data-disabled-link="Discord ainda não configurado">Discord</a>
     </div>
   </footer>
 
@@ -1755,7 +1768,7 @@
       <div class="sheet-head">
         <div>
           <h3>Conectar carteira</h3>
-          <p>Escolha uma carteira para usar na Arc Testnet.</p>
+          <p>A conexão usa o provedor da wallet disponível no navegador.</p>
         </div>
 
         <button class="sheet-close" id="closeWalletSheet">×</button>
@@ -1789,14 +1802,14 @@
         <button class="wallet-option" data-wallet="Base">
           <div>
             <strong>Base Wallet</strong>
-            <span>Compatível quando houver provedor no navegador.</span>
+            <span>Usa o provedor disponível no navegador.</span>
           </div>
           <div class="wallet-badge">B</div>
         </button>
       </div>
 
       <div class="sheet-warning">
-        Nunca compartilhe seed phrase. A BountyFlow só precisa do endereço público da carteira.
+        Nunca compartilhe seed phrase. A BountyFlow lê apenas o endereço público e saldos USDC/EURC.
       </div>
     </section>
   </div>
@@ -1804,18 +1817,35 @@
   <div class="toast" id="toast">ok</div>
 
   <script>
-    const CREATOR_DEMO = "0xCReaTor0000000000000000000000000000000001";
-    const TESTER_DEMO = "0xTeSTer0000000000000000000000000000000002";
+    const STORAGE_KEY = "bountyflow_local_state_v2";
+    const ARC_CHAIN_ID_HEX = "0x4cef52";
+    const ARC_CHAIN_NAME = "Arc Testnet";
+
+    const TOKENS = {
+      USDC:{
+        address:"0x3600000000000000000000000000000000000000",
+        decimals:6
+      },
+      EURC:{
+        address:"0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
+        decimals:6
+      }
+    };
 
     const state = {
       connected:false,
       wallet:null,
+      chainId:null,
+      chainOk:false,
       mode:"tester",
       token:"USDC",
       selectedId:null,
       rewardsOpen:false,
-      pools:{ USDC:50, EURC:30 },
-      reserved:{ USDC:0, EURC:0 },
+      balances:{
+        USDC:null,
+        EURC:null
+      },
+      balanceLoading:false,
       tasks:[],
       proofs:[],
       profiles:{}
@@ -1825,16 +1855,17 @@
 
     const walletText = $("walletText");
     const walletBtn = $("walletBtn");
-    const demoBtn = $("demoBtn");
-    const modeText = $("modeText");
+    const clearBtn = $("clearBtn");
+    const networkText = $("networkText");
     const modeNote = $("modeNote");
     const creatorView = $("creatorView");
     const testerView = $("testerView");
 
-    const usdcPool = $("usdcPool");
-    const eurcPool = $("eurcPool");
-    const usdcReserved = $("usdcReserved");
-    const eurcReserved = $("eurcReserved");
+    const usdcStatus = $("usdcStatus");
+    const eurcStatus = $("eurcStatus");
+    const usdcLocal = $("usdcLocal");
+    const eurcLocal = $("eurcLocal");
+    const refreshBalancesBtn = $("refreshBalancesBtn");
     const tokenTag = $("tokenTag");
 
     const taskTitle = $("taskTitle");
@@ -1885,22 +1916,8 @@
       return address.slice(0,6) + "..." + address.slice(-4);
     }
 
-    function makeWallet(){
-      return "0x" + Math.random().toString(16).slice(2,10).padEnd(8,"0") + Math.random().toString(16).slice(2,34).padEnd(32,"0");
-    }
-
-    function ensureProfile(wallet){
-      if(!wallet) return { done:0, earned:0, score:72 };
-
-      if(!state.profiles[wallet]){
-        state.profiles[wallet] = {
-          done:0,
-          earned:0,
-          score:72
-        };
-      }
-
-      return state.profiles[wallet];
+    function normalizeAddress(address){
+      return String(address || "").toLowerCase();
     }
 
     function escapeHTML(text){
@@ -1933,26 +1950,352 @@
         .replace(/\/$/, "");
     }
 
-    function available(token){
-      return Math.max(0, state.pools[token] - state.reserved[token]);
-    }
-
-    function recalcReserved(){
-      state.reserved.USDC = 0;
-      state.reserved.EURC = 0;
-
-      state.tasks.forEach(task => {
-        if(task.slots > 0){
-          state.reserved[task.token] += task.reward * task.slots;
-        }
-      });
-    }
-
     function showToast(text){
       toast.textContent = text;
       toast.classList.add("show");
       clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1700);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1900);
+    }
+
+    function saveLocal(){
+      const payload = {
+        tasks:state.tasks,
+        proofs:state.proofs,
+        profiles:state.profiles
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    }
+
+    function loadLocal(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+
+        if(!raw){
+          return;
+        }
+
+        const saved = JSON.parse(raw);
+
+        state.tasks = Array.isArray(saved.tasks) ? saved.tasks : [];
+        state.proofs = Array.isArray(saved.proofs) ? saved.proofs : [];
+        state.profiles = saved.profiles && typeof saved.profiles === "object" ? saved.profiles : {};
+      }catch(err){
+        console.warn("Local state load failed", err);
+      }
+    }
+
+    function clearLocal(){
+      const ok = window.confirm("Limpar tarefas, provas e perfil local deste navegador?");
+
+      if(!ok){
+        return;
+      }
+
+      state.tasks = [];
+      state.proofs = [];
+      state.profiles = {};
+      state.selectedId = null;
+      state.rewardsOpen = false;
+
+      localStorage.removeItem(STORAGE_KEY);
+      resetProofForm();
+      showToast("Dados locais limpos");
+      render();
+    }
+
+    function ensureProfile(wallet){
+      if(!wallet){
+        return { approved:0, promised:0, score:72 };
+      }
+
+      const key = normalizeAddress(wallet);
+
+      if(!state.profiles[key]){
+        state.profiles[key] = {
+          approved:0,
+          promised:0,
+          score:72
+        };
+      }
+
+      return state.profiles[key];
+    }
+
+    function getProvider(walletName){
+      const eth = window.ethereum;
+
+      if(!eth){
+        return null;
+      }
+
+      const providers = Array.isArray(eth.providers) ? eth.providers : [eth];
+
+      const matchers = {
+        MetaMask:(p) => p.isMetaMask,
+        Rabby:(p) => p.isRabby,
+        OKX:(p) => p.isOkxWallet || p.isOKExWallet,
+        Base:(p) => p.isCoinbaseWallet
+      };
+
+      const matcher = matchers[walletName];
+      const matched = matcher ? providers.find(matcher) : null;
+
+      return matched || eth;
+    }
+
+    async function readChain(provider){
+      const chainId = await provider.request({ method:"eth_chainId" });
+      state.chainId = chainId;
+      state.chainOk = String(chainId).toLowerCase() === ARC_CHAIN_ID_HEX.toLowerCase();
+      return chainId;
+    }
+
+    async function trySwitchArc(provider){
+      try{
+        await provider.request({
+          method:"wallet_switchEthereumChain",
+          params:[{ chainId:ARC_CHAIN_ID_HEX }]
+        });
+
+        await readChain(provider);
+      }catch(err){
+        if(err && err.code === 4902){
+          showToast("Arc Testnet não está cadastrada na carteira");
+        }else{
+          showToast("Troque para Arc Testnet na carteira");
+        }
+      }
+    }
+
+    function padAddress(address){
+      return String(address || "").toLowerCase().replace("0x","").padStart(64,"0");
+    }
+
+    function balanceOfCallData(address){
+      return "0x70a08231" + padAddress(address);
+    }
+
+    function hexToBigInt(hex){
+      if(!hex || hex === "0x"){
+        return 0n;
+      }
+
+      return BigInt(hex);
+    }
+
+    function formatUnits(value, decimals){
+      const base = 10n ** BigInt(decimals);
+      const whole = value / base;
+      const fraction = value % base;
+      const fractionText = fraction.toString().padStart(decimals, "0").slice(0, 6).replace(/0+$/,"");
+
+      return fractionText ? `${whole}.${fractionText}` : whole.toString();
+    }
+
+    async function readTokenBalance(provider, tokenKey){
+      const token = TOKENS[tokenKey];
+
+      const result = await provider.request({
+        method:"eth_call",
+        params:[
+          {
+            to:token.address,
+            data:balanceOfCallData(state.wallet)
+          },
+          "latest"
+        ]
+      });
+
+      return formatUnits(hexToBigInt(result), token.decimals);
+    }
+
+    async function loadBalances(){
+      const provider = window.ethereum;
+
+      if(!provider || !state.connected || !state.wallet){
+        state.balances.USDC = null;
+        state.balances.EURC = null;
+        render();
+        return;
+      }
+
+      if(!state.chainOk){
+        state.balances.USDC = null;
+        state.balances.EURC = null;
+        render();
+        return;
+      }
+
+      try{
+        state.balanceLoading = true;
+        render();
+
+        const usdc = await readTokenBalance(provider, "USDC");
+        const eurc = await readTokenBalance(provider, "EURC");
+
+        state.balances.USDC = usdc;
+        state.balances.EURC = eurc;
+
+        showToast("Saldos atualizados");
+      }catch(err){
+        console.warn(err);
+        state.balances.USDC = "erro";
+        state.balances.EURC = "erro";
+        showToast("Não foi possível ler saldos");
+      }finally{
+        state.balanceLoading = false;
+        render();
+      }
+    }
+
+    async function connectWallet(walletName){
+      const provider = getProvider(walletName);
+
+      if(!provider){
+        showToast("Carteira não encontrada neste navegador");
+        return;
+      }
+
+      try{
+        const accounts = await provider.request({ method:"eth_requestAccounts" });
+
+        if(!accounts || !accounts.length){
+          showToast("Nenhuma conta retornada");
+          return;
+        }
+
+        state.connected = true;
+        state.wallet = accounts[0];
+
+        await readChain(provider);
+
+        if(!state.chainOk){
+          await trySwitchArc(provider);
+        }
+
+        ensureProfile(state.wallet);
+        hideWalletSheet();
+
+        if(state.chainOk){
+          showToast("Carteira conectada na Arc");
+          await loadBalances();
+        }else{
+          showToast("Carteira conectada, rede pendente");
+        }
+
+        render();
+      }catch(err){
+        console.warn(err);
+
+        if(err && err.code === 4001){
+          showToast("Conexão cancelada");
+        }else{
+          showToast("Não foi possível conectar");
+        }
+      }
+    }
+
+    function disconnectWallet(){
+      state.connected = false;
+      state.wallet = null;
+      state.chainId = null;
+      state.chainOk = false;
+      state.balances.USDC = null;
+      state.balances.EURC = null;
+      resetProofForm();
+      showToast("Carteira removida da sessão");
+      render();
+    }
+
+    async function checkExistingConnection(){
+      const provider = window.ethereum;
+
+      if(!provider){
+        render();
+        return;
+      }
+
+      try{
+        const accounts = await provider.request({ method:"eth_accounts" });
+
+        if(accounts && accounts.length){
+          state.connected = true;
+          state.wallet = accounts[0];
+          await readChain(provider);
+          ensureProfile(state.wallet);
+
+          if(state.chainOk){
+            await loadBalances();
+          }
+        }
+      }catch(err){
+        console.warn(err);
+      }
+
+      render();
+    }
+
+    function setupWalletEvents(){
+      const provider = window.ethereum;
+
+      if(!provider || !provider.on){
+        return;
+      }
+
+      provider.on("accountsChanged", async (accounts) => {
+        if(!accounts || !accounts.length){
+          disconnectWallet();
+          return;
+        }
+
+        state.connected = true;
+        state.wallet = accounts[0];
+        ensureProfile(state.wallet);
+        resetProofForm();
+
+        if(state.chainOk){
+          await loadBalances();
+        }
+
+        render();
+      });
+
+      provider.on("chainChanged", async (chainId) => {
+        state.chainId = chainId;
+        state.chainOk = String(chainId).toLowerCase() === ARC_CHAIN_ID_HEX.toLowerCase();
+
+        if(state.chainOk){
+          await loadBalances();
+        }else{
+          state.balances.USDC = null;
+          state.balances.EURC = null;
+        }
+
+        render();
+      });
+    }
+
+    function requireWallet(){
+      if(!state.connected || !state.wallet){
+        showToast("Conecte a carteira");
+        return false;
+      }
+
+      return true;
+    }
+
+    function requireArc(){
+      if(!requireWallet()){
+        return false;
+      }
+
+      if(!state.chainOk){
+        showToast("Troque para Arc Testnet");
+        return false;
+      }
+
+      return true;
     }
 
     function openWalletSheet(){
@@ -1961,23 +2304,6 @@
 
     function hideWalletSheet(){
       walletSheet.hidden = true;
-    }
-
-    function connectFakeWallet(walletName){
-      state.connected = true;
-      state.wallet = makeWallet();
-      ensureProfile(state.wallet);
-      hideWalletSheet();
-      showToast(walletName + " conectada");
-      render();
-    }
-
-    function disconnectWallet(){
-      state.connected = false;
-      state.wallet = null;
-      resetProofForm();
-      showToast("Carteira desconectada");
-      render();
     }
 
     function setMode(mode){
@@ -1990,10 +2316,8 @@
       creatorView.hidden = mode !== "creator";
       testerView.hidden = mode !== "tester";
 
-      modeText.textContent = mode === "creator" ? "Criador" : "Tester";
-
       modeNote.textContent = mode === "creator"
-        ? "Criador cria tarefas, reserva recompensa e aprova provas recebidas."
+        ? "Criador cria tarefas locais, recebe provas e aprova/rejeita antes da fase de pagamento real."
         : "Tester escolhe uma tarefa, abre o projeto, envia prova e acompanha em Minhas provas.";
 
       resetProofForm();
@@ -2038,26 +2362,28 @@
       let hits = 0;
 
       words.forEach(w => {
-        if(text.includes(w)) hits++;
+        if(text.includes(w)){
+          hits++;
+        }
       });
 
       if(text.length > 120 && hits >= 5){
         return {
           quality:"Forte",
-          suggestion:"Boa prova. Criador pode aprovar."
+          suggestion:"Prova detalhada para revisão do criador."
         };
       }
 
       if(text.length > 60 && hits >= 2){
         return {
           quality:"Boa",
-          suggestion:"Pode aprovar, se fizer sentido."
+          suggestion:"Prova útil, mas o criador deve revisar."
         };
       }
 
       return {
         quality:"Fraca",
-        suggestion:"Pedir mais detalhes."
+        suggestion:"Peça mais detalhes antes de aprovar."
       };
     }
 
@@ -2072,35 +2398,81 @@
     }
 
     function statusLabel(status){
-      if(status === "approved") return "PAGO ✔";
+      if(status === "approved") return "Aprovada";
       if(status === "rejected") return "Rejeitada";
       return "Aguardando";
+    }
+
+    function localPromised(token){
+      return state.tasks.reduce((sum, task) => {
+        if(task.token === token && task.slots > 0){
+          return sum + (Number(task.reward) * Number(task.slots));
+        }
+
+        return sum;
+      }, 0);
+    }
+
+    function balanceText(token){
+      if(!state.connected){
+        return "—";
+      }
+
+      if(!state.chainOk){
+        return "rede";
+      }
+
+      if(state.balanceLoading){
+        return "...";
+      }
+
+      const value = state.balances[token];
+
+      if(value === "erro"){
+        return "erro";
+      }
+
+      if(value === null || value === undefined){
+        return "—";
+      }
+
+      return value;
     }
 
     function render(){
       walletText.textContent = state.connected ? shortWallet(state.wallet) : "Não conectada";
       walletBtn.textContent = state.connected ? "Desconectar" : "Conectar";
-      modeText.textContent = state.mode === "creator" ? "Criador" : "Tester";
 
-      usdcPool.textContent = money(available("USDC"));
-      eurcPool.textContent = money(available("EURC"));
-      usdcReserved.textContent = `${money(state.reserved.USDC)} reservado`;
-      eurcReserved.textContent = `${money(state.reserved.EURC)} reservado`;
+      if(!state.connected){
+        networkText.textContent = "Arc Testnet";
+      }else if(state.chainOk){
+        networkText.textContent = "Arc OK";
+      }else{
+        networkText.textContent = "Rede errada";
+      }
+
+      usdcStatus.textContent = balanceText("USDC");
+      eurcStatus.textContent = balanceText("EURC");
+      usdcLocal.textContent = `${money(localPromised("USDC"))} previsto local`;
+      eurcLocal.textContent = `${money(localPromised("EURC"))} previsto local`;
+
+      refreshBalancesBtn.disabled = !state.connected || !state.chainOk || state.balanceLoading;
+      refreshBalancesBtn.textContent = state.balanceLoading ? "Lendo" : "Atualizar";
 
       tokenTag.textContent = state.token;
 
       const openTasks = state.tasks.filter(task => task.slots > 0);
       const myTasks = state.connected
-        ? state.tasks.filter(task => task.creator === state.wallet && task.slots > 0)
+        ? state.tasks.filter(task => normalizeAddress(task.creator) === normalizeAddress(state.wallet) && task.slots > 0)
         : [];
 
       taskCount.textContent = openTasks.length;
       myTaskCount.textContent = myTasks.length;
 
       const profile = ensureProfile(state.wallet);
-      doneCount.textContent = profile.done;
-      earnedValue.textContent = money(profile.earned);
-      scoreValue.textContent = profile.score;
+      doneCount.textContent = profile.approved || 0;
+      earnedValue.textContent = money(profile.promised || 0);
+      scoreValue.textContent = profile.score || 72;
 
       rewardsToggle.textContent = state.rewardsOpen ? "Fechar" : "Abrir";
       testerRewardList.hidden = !state.rewardsOpen;
@@ -2117,14 +2489,14 @@
         taskList.innerHTML = `
           <div class="task">
             <div class="task-title">Nenhuma tarefa aberta</div>
-            <p>Entre como tester, escolha uma tarefa e envie uma prova útil.</p>
+            <p>Quando um criador publicar uma tarefa neste navegador, ela aparece aqui para teste local.</p>
           </div>
         `;
         return;
       }
 
       taskList.innerHTML = tasks.map(task => {
-        const isOwn = state.connected && task.creator === state.wallet;
+        const isOwn = state.connected && normalizeAddress(task.creator) === normalizeAddress(state.wallet);
 
         return `
           <div class="task">
@@ -2168,7 +2540,7 @@
         myTaskList.innerHTML = `
           <div class="task">
             <div class="task-title">Nenhuma tarefa criada</div>
-            <p>Crie uma tarefa com link, recompensa e prova exigida.</p>
+            <p>Crie uma tarefa com link, recompensa prevista e prova exigida.</p>
           </div>
         `;
         return;
@@ -2187,7 +2559,7 @@
 
           <div class="task-bottom">
             <div class="slots">${task.slots} vagas</div>
-            <div class="slots">${money(task.reward * task.slots)} ${task.token} reservado</div>
+            <div class="slots">${money(task.reward * task.slots)} ${task.token} previsto</div>
           </div>
         </div>
       `).join("");
@@ -2206,7 +2578,7 @@
       }
 
       const myTaskIds = state.tasks
-        .filter(task => task.creator === state.wallet)
+        .filter(task => normalizeAddress(task.creator) === normalizeAddress(state.wallet))
         .map(task => task.id);
 
       const proofs = state.proofs.filter(proof => {
@@ -2244,13 +2616,13 @@
               </div>
 
               <div class="result-box">
-                <small>IA / qualidade</small>
+                <small>Pré-análise local</small>
                 <b>${escapeHTML(proof.quality)} — ${escapeHTML(proof.suggestion)}</b>
               </div>
             </div>
 
             <div class="proof-actions" style="margin-top:8px;">
-              <button class="pay-btn" data-approve="${proof.id}">Aprovar e pagar</button>
+              <button class="pay-btn" data-approve="${proof.id}">Aprovar</button>
               <button class="small-btn" data-reject="${proof.id}">Rejeitar</button>
             </div>
           </div>
@@ -2263,13 +2635,13 @@
         testerRewardList.innerHTML = `
           <div class="reward-card">
             <div class="reward-title">Conecte a carteira</div>
-            <p>Suas provas, aprovações e recompensas aparecem aqui.</p>
+            <p>Suas provas, aprovações e recompensas previstas aparecem aqui.</p>
           </div>
         `;
         return;
       }
 
-      const proofs = state.proofs.filter(proof => proof.tester === state.wallet);
+      const proofs = state.proofs.filter(proof => normalizeAddress(proof.tester) === normalizeAddress(state.wallet));
 
       if(!proofs.length){
         testerRewardList.innerHTML = `
@@ -2284,8 +2656,9 @@
       testerRewardList.innerHTML = proofs.map(proof => {
         const task = state.tasks.find(item => item.id === proof.taskId);
         const status = proof.status;
+
         const badgeClass = status === "approved"
-          ? "paid-badge"
+          ? "approved-badge"
           : status === "rejected"
             ? "rejected-badge"
             : "pending-badge";
@@ -2300,7 +2673,7 @@
         const amount = task ? `${money(task.reward)} ${task.token}` : "";
 
         const message = status === "approved"
-          ? `Recompensa liberada: ${amount}. Seu perfil foi atualizado.`
+          ? `Prova aprovada. Recompensa prevista: ${amount}. Pagamento real ainda não está integrado.`
           : status === "rejected"
             ? "Sua prova foi rejeitada. Você pode tentar outra tarefa."
             : "Sua prova foi enviada e está aguardando revisão do criador.";
@@ -2316,12 +2689,12 @@
 
             <div class="result">
               <div class="result-box">
-                <small>Recompensa</small>
+                <small>Recompensa prevista</small>
                 <b>${escapeHTML(amount || "—")}</b>
               </div>
 
               <div class="result-box">
-                <small>IA / qualidade</small>
+                <small>Pré-análise local</small>
                 <b>${escapeHTML(proof.quality)} — ${escapeHTML(proof.suggestion)}</b>
               </div>
             </div>
@@ -2331,8 +2704,7 @@
     }
 
     function createTask(){
-      if(!state.connected){
-        showToast("Conecte como criador");
+      if(!requireArc()){
         return;
       }
 
@@ -2362,13 +2734,6 @@
         return;
       }
 
-      const totalNeeded = reward * slots;
-
-      if(totalNeeded > available(state.token)){
-        showToast("Reserva insuficiente");
-        return;
-      }
-
       state.tasks.unshift({
         id:id(),
         title,
@@ -2378,10 +2743,9 @@
         proof,
         token:state.token,
         creator:state.wallet,
+        status:"open",
         createdAt:Date.now()
       });
-
-      recalcReserved();
 
       taskTitle.value = "";
       taskLink.value = "";
@@ -2389,75 +2753,13 @@
       taskSlots.value = "";
       taskProof.value = "";
 
-      showToast("Tarefa criada");
-      render();
-    }
-
-    function seedDemo(){
-      state.tasks = [
-        {
-          id:id(),
-          title:"Conectar carteira na StableFlow",
-          link:"https://ediferras4.github.io/stableflow/",
-          reward:0.20,
-          slots:10,
-          proof:"Abra a StableFlow, tente conectar sua carteira na Arc Testnet e envie carteira usada, navegador, aparelho e se conectou.",
-          token:"USDC",
-          creator:CREATOR_DEMO,
-          createdAt:Date.now()
-        },
-        {
-          id:id(),
-          title:"Avaliar tela Get Paid",
-          link:"https://ediferras4.github.io/stableflow/",
-          reward:0.15,
-          slots:8,
-          proof:"Abra a tela Get Paid e diga se o pedido de pagamento ficou claro para um novo usuário.",
-          token:"EURC",
-          creator:CREATOR_DEMO,
-          createdAt:Date.now()
-        }
-      ];
-
-      state.proofs = [];
-
-      if(state.connected && state.mode === "creator"){
-        const ownTask = {
-          id:id(),
-          title:"Revisar experiência mobile",
-          link:"https://bountyflow-arc.vercel.app",
-          reward:0.10,
-          slots:5,
-          proof:"Tester deve abrir no celular, navegar pela página e enviar opinião clara sobre layout, scroll e botões.",
-          token:"USDC",
-          creator:state.wallet,
-          createdAt:Date.now()
-        };
-
-        state.tasks.unshift(ownTask);
-
-        const analysis = analyzeText("Testei no Android com MetaMask. A página abriu bem, o scroll funcionou e os botões ficaram claros. Não encontrei erro grave, mas o topo poderia ser menor.");
-
-        state.proofs.push({
-          id:id(),
-          taskId:ownTask.id,
-          tester:TESTER_DEMO,
-          text:"Testei no Android com MetaMask. A página abriu bem, o scroll funcionou e os botões ficaram claros. Não encontrei erro grave, mas o topo poderia ser menor.",
-          quality:analysis.quality,
-          suggestion:analysis.suggestion,
-          status:"pending",
-          createdAt:Date.now()
-        });
-      }
-
-      recalcReserved();
-      showToast("Demo criada");
+      saveLocal();
+      showToast("Tarefa local criada");
       render();
     }
 
     function selectTask(taskId){
-      if(!state.connected){
-        showToast("Conecte como tester");
+      if(!requireArc()){
         return;
       }
 
@@ -2472,13 +2774,13 @@
         return;
       }
 
-      if(task.creator === state.wallet){
+      if(normalizeAddress(task.creator) === normalizeAddress(state.wallet)){
         showToast("Você não pode fazer sua própria tarefa");
         return;
       }
 
       const alreadySent = state.proofs.some(proof => {
-        return proof.taskId === taskId && proof.tester === state.wallet && proof.status !== "rejected";
+        return proof.taskId === taskId && normalizeAddress(proof.tester) === normalizeAddress(state.wallet) && proof.status !== "rejected";
       });
 
       if(alreadySent){
@@ -2508,8 +2810,7 @@
     }
 
     function submitProof(){
-      if(!state.connected){
-        showToast("Conecte como tester");
+      if(!requireArc()){
         return;
       }
 
@@ -2526,7 +2827,7 @@
         return;
       }
 
-      if(task.creator === state.wallet){
+      if(normalizeAddress(task.creator) === normalizeAddress(state.wallet)){
         showToast("Você não pode fazer sua própria tarefa");
         return;
       }
@@ -2537,7 +2838,7 @@
       }
 
       const alreadySent = state.proofs.some(proof => {
-        return proof.taskId === task.id && proof.tester === state.wallet && proof.status !== "rejected";
+        return proof.taskId === task.id && normalizeAddress(proof.tester) === normalizeAddress(state.wallet) && proof.status !== "rejected";
       });
 
       if(alreadySent){
@@ -2565,11 +2866,17 @@
       suggestText.textContent = analysis.suggestion;
 
       proofText.value = "";
-      showToast("Prova enviada para o criador");
+
+      saveLocal();
+      showToast("Prova local enviada");
       render();
     }
 
     function approveProof(proofId){
+      if(!requireArc()){
+        return;
+      }
+
       const proof = state.proofs.find(item => item.id === proofId);
 
       if(!proof || proof.status !== "pending"){
@@ -2582,7 +2889,7 @@
         return;
       }
 
-      if(task.creator !== state.wallet){
+      if(normalizeAddress(task.creator) !== normalizeAddress(state.wallet)){
         showToast("Só o criador aprova");
         return;
       }
@@ -2592,30 +2899,28 @@
         return;
       }
 
-      if(state.pools[task.token] < task.reward){
-        showToast("Pool insuficiente");
-        return;
-      }
-
       proof.status = "approved";
       task.slots -= 1;
-      state.pools[task.token] -= task.reward;
 
       const profile = ensureProfile(proof.tester);
-      profile.done += 1;
-      profile.earned += task.reward;
-      profile.score = Math.min(99, profile.score + 3);
+      profile.approved = (profile.approved || 0) + 1;
+      profile.promised = (profile.promised || 0) + Number(task.reward);
+      profile.score = Math.min(99, (profile.score || 72) + 3);
 
       if(task.slots <= 0){
-        task.closed = true;
+        task.status = "closed";
       }
 
-      recalcReserved();
-      showToast("Aprovado e pago");
+      saveLocal();
+      showToast("Prova aprovada localmente");
       render();
     }
 
     function rejectProof(proofId){
+      if(!requireArc()){
+        return;
+      }
+
       const proof = state.proofs.find(item => item.id === proofId);
 
       if(!proof || proof.status !== "pending"){
@@ -2624,7 +2929,7 @@
 
       const task = state.tasks.find(item => item.id === proof.taskId);
 
-      if(!task || task.creator !== state.wallet){
+      if(!task || normalizeAddress(task.creator) !== normalizeAddress(state.wallet)){
         showToast("Só o criador rejeita");
         return;
       }
@@ -2632,9 +2937,10 @@
       proof.status = "rejected";
 
       const profile = ensureProfile(proof.tester);
-      profile.score = Math.max(40, profile.score - 1);
+      profile.score = Math.max(40, (profile.score || 72) - 1);
 
-      showToast("Prova rejeitada");
+      saveLocal();
+      showToast("Prova rejeitada localmente");
       render();
     }
 
@@ -2647,7 +2953,9 @@
       openWalletSheet();
     });
 
+    clearBtn.addEventListener("click", clearLocal);
     closeWalletSheet.addEventListener("click", hideWalletSheet);
+    refreshBalancesBtn.addEventListener("click", loadBalances);
 
     walletSheet.addEventListener("click", (e) => {
       if(e.target === walletSheet){
@@ -2657,11 +2965,10 @@
       const option = e.target.closest("[data-wallet]");
 
       if(option){
-        connectFakeWallet(option.dataset.wallet);
+        connectWallet(option.dataset.wallet);
       }
     });
 
-    demoBtn.addEventListener("click", seedDemo);
     createBtn.addEventListener("click", createTask);
     submitProofBtn.addEventListener("click", submitProof);
 
@@ -2718,9 +3025,17 @@
       }
     });
 
+    document.querySelectorAll("[data-disabled-link]").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast(link.dataset.disabledLink);
+      });
+    });
+
+    loadLocal();
+    setupWalletEvents();
     setMode("tester");
-    recalcReserved();
-    render();
+    checkExistingConnection();
   </script>
 </body>
   </html>
